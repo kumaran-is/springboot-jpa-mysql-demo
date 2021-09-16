@@ -1,4 +1,4 @@
-package com.college.demo.student;
+package com.college.demo.controller;
 
 import java.util.List;
 
@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.college.demo.model.Student;
+import com.college.demo.service.StudentService;
 
 @RestController
 @RequestMapping("/api/v1/student")

@@ -1,4 +1,4 @@
-package com.college.demo.student;
+package com.college.demo.service;
 
 import java.util.List;
 import java.util.Objects;
@@ -8,6 +8,9 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.college.demo.model.Student;
+import com.college.demo.repository.StudentRepository;
 
 @Service
 public class StudentService {
