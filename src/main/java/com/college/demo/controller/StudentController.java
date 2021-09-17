@@ -40,7 +40,7 @@ public class StudentController {
 	
 	@GetMapping("/{email}")
 	@ApiOperation("Returns a student by email")
-	public ResponseEntity<?> findStudentByEmail(@Valid @PathVariable String email) {
+	public ResponseEntity<?> findStudentByEmail(@Valid @PathVariable("email") String email) {
 		try {
 			return ResponseEntity.ok().body(studentMapper.toStudentDTO(studentService.findStudentByEmail(email)));  // return 200, with JSON body
 		} catch (ResourceNotFoundException ex) {
@@ -75,11 +75,10 @@ public class StudentController {
 	
 	@DeleteMapping("/{id}")
 	@ApiOperation("Delete a Student")
-	public ResponseEntity<?> deleteStudentById(@PathVariable Long id) {
+	public ResponseEntity<?> deleteStudentById(@PathVariable("id") Long id) {
 		try {
 			studentService.deleteStudent(id);
-			// return ResponseEntity.noContent().build() or use below for void response
-			return ResponseEntity.ok().build();
+			return ResponseEntity.accepted().build();
 		} catch (ResourceNotFoundException ex) {
 			// log exception first, then return Not Found (404)
 			log.error(ex.getMessage());
@@ -91,10 +90,10 @@ public class StudentController {
 	@PutMapping("/{id}")
 	@ApiOperation("Update a Student")
 	public ResponseEntity<?> modifyStudent(
-			@PathVariable Long id,
-			@RequestParam(required = false) String firstName,
-			@RequestParam(required = false) String lastName,
-			@RequestParam(required = false) String email) {
+			@PathVariable("id") Long id,
+			@RequestParam(name= "firstName", required = false) String firstName,
+			@RequestParam(name= "lastName", required = false) String lastName,
+			@RequestParam(name= "email", required = false) String email) {
 		try {
 			return ResponseEntity.ok().body(studentMapper.toStudentDTO(studentService.updateStudent(id, firstName, lastName, email)));
 		}  catch (ResourceNotFoundException ex) {
