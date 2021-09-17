@@ -35,11 +35,15 @@ public class AspectConfig {
 		log.debug("Inside One Method Parameter After Returning"+ object);
 	} */
 	
-	@Around(value = "execution(* com.college.demo.controller.*.*(..)) and args(object)")
-	public void aroundAdvice(ProceedingJoinPoint proceedingJoinPoint, Object object) {
-		log.debug("##############Inside One Method Parameter aroundAdvice request##########>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+ object);
+	@Around(value = "execution(* com.college.demo.controller.*.*(..))")
+	public Object aroundAdvice(ProceedingJoinPoint proceedingJoinPoint) {
 		
 		Object returningObject = null;
+		String targetClass = proceedingJoinPoint.getTarget().getClass().getSimpleName();
+        String targetMethod = proceedingJoinPoint.getSignature().getName();
+        Object[] argsArray = proceedingJoinPoint.getArgs();
+       
+        log.debug("Executing {}.{} with argument: {}", targetClass, targetMethod, argsArray);
 		
 		try {
 			returningObject = proceedingJoinPoint.proceed();
@@ -47,8 +51,10 @@ public class AspectConfig {
 			e.printStackTrace();
 		}
 		
-		log.debug("**************************Inside One Method Parameter aroundAdvice returningObject***************>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+ returningObject);
+		log.debug("{}.{} returns: {} ", targetClass, targetMethod, returningObject);
+		
+		return returningObject;
 			
-	} 
+	}
 }
 

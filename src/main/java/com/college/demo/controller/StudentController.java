@@ -58,18 +58,19 @@ public class StudentController {
 	
 	@PostMapping
 	@ApiOperation("Add a new student")
-	public ResponseEntity<?> addNewStudent(@Valid @RequestBody StudentDTO studentDTO) throws URISyntaxException {
-		try {
-			Student newStudent = studentService.addNewStudent(studentMapper.toStudent(studentDTO));
-			log.debug("Inside controller >>>> "+ newStudent);
-			//return ResponseEntity.status(HttpStatus.CREATED).body(studentMapper.toStudentDTO(newStudent));
-			return ResponseEntity.created(new URI("/api/v1/student/" + newStudent.getId())).body(studentMapper.toStudentDTO(newStudent));
+	public ResponseEntity<StudentDTO> addNewStudent(@Valid @RequestBody StudentDTO studentDTO) throws URISyntaxException {
+		//try {
+			Student savedStudent = studentService.addNewStudent(studentMapper.toStudent(studentDTO));
+			log.debug("Inside controller >>>>@@@@ "+ savedStudent);
+			//return ResponseEntity.status(HttpStatus.CREATED).body(studentMapper.toStudentDTO(savedStudent));
+			//  return ResponseEntity.created(new URI("/api/v1/student/" + newStudent.getId())).body(studentMapper.toStudentDTO(savedStudent));
+			return new ResponseEntity<StudentDTO>(studentMapper.toStudentDTO(savedStudent),null , HttpStatus.CREATED);
 
-		} catch (ResourceAlreadyExistsException ex) {
+		/*} catch (ResourceAlreadyExistsException ex) {
 			// log exception first, then return Conflict (409)
-			log.error("Inside Controller addNewStudent >> "+ ex.getMessage());
-			return ResponseEntity.status(HttpStatus.CONFLICT).body("Error Message");
-		}
+			/ log.error("Inside Controller addNewStudent >> "+ ex.getMessage());
+			// return ResponseEntity.status(HttpStatus.CONFLICT).body("Error Message");
+		}*/
 	}
 	
 	@DeleteMapping("/{id}")
