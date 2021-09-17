@@ -30,7 +30,7 @@ import com.college.demo.service.StudentServiceImpl;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/student")
+@RequestMapping("/api/v1/students")
 public class StudentController {
 	
 	@Autowired
@@ -50,10 +50,10 @@ public class StudentController {
 	    } 
 	}
 	
-	@GetMapping("/list")
+	@GetMapping
 	@ApiOperation("Returns all the Students")
-	public ResponseEntity<List<StudentDTO>> getStudents() {
-		return ResponseEntity.ok().body(studentMapper.toStudentDTOs(studentService.getStudents()));  // return 200, with JSON body
+	public ResponseEntity<List<StudentDTO>> findAllStudents() {
+		return ResponseEntity.ok().body(studentMapper.toStudentDTOs(studentService.getAllStudents()));  // return 200, with JSON body
 	}
 	
 	@PostMapping

@@ -5,7 +5,7 @@ import com.college.demo.model.Student;
 
 public interface StudentService {
 	
-	public List<Student> getStudents();
+	public List<Student> getAllStudents();
 	
 	public Student findStudentByEmail(String email);
 	
