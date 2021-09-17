@@ -37,7 +37,7 @@ public class AspectConfig {
 	
 	@Around(value = "execution(* com.college.demo.controller.*.*(..)) and args(object)")
 	public void aroundAdvice(ProceedingJoinPoint proceedingJoinPoint, Object object) {
-		log.debug("Inside One Method Parameter aroundAdvice request"+ object);
+		log.debug("##############Inside One Method Parameter aroundAdvice request##########>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+ object);
 		
 		Object returningObject = null;
 		
@@ -47,7 +47,7 @@ public class AspectConfig {
 			e.printStackTrace();
 		}
 		
-		log.debug("Inside One Method Parameter aroundAdvice returningObject"+ returningObject);
+		log.debug("**************************Inside One Method Parameter aroundAdvice returningObject***************>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+ returningObject);
 			
 	} 
 }

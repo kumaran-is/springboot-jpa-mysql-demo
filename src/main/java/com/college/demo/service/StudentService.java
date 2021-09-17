@@ -8,9 +8,9 @@ public interface StudentService {
 	
 	public List<Student> getStudents();
 	
-	public void addNewStudent(Student student);
+	public Student addNewStudent(Student student);
 	
 	public void deleteStudent(Long id);
 	
-	public void updateStudent(Long id, String name, String email);
+	public Student updateStudent(Long id, String name, String email);
 }
