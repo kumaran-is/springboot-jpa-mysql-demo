@@ -43,8 +43,13 @@ public class Student {
 	
 	@Column(nullable = false)
 	@NotNull(message = "First Name cannot be null")
-	@ApiModelProperty(value ="Name of the student", name="name", required = true, example= "James")
-	private String name;
+	@ApiModelProperty(value ="First Name of the student", name="name", required = true, example= "James")
+	private String firstName;
+	
+	@Column(nullable = false)
+	@NotNull(message = "Last Name cannot be null")
+	@ApiModelProperty(value ="Last Name of the student", name="name", required = true, example= "Bond")
+	private String lastName;
 	
 	@Column(nullable = false)
 	@NotNull(message = "Email cannot be null")

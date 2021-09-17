@@ -90,10 +90,11 @@ public class StudentController {
 	@ApiOperation("Update a Student")
 	public ResponseEntity<?> modifyStudent(
 			@PathVariable Long id,
-			@RequestParam(required = false) String name,
+			@RequestParam(required = false) String firstName,
+			@RequestParam(required = false) String lastName,
 			@RequestParam(required = false) String email) {
 		try {
-			return ResponseEntity.ok().body(studentMapper.toStudentDTO(studentService.updateStudent(id, name, email)));
+			return ResponseEntity.ok().body(studentMapper.toStudentDTO(studentService.updateStudent(id, firstName, lastName, email)));
 		}  catch (ResourceNotFoundException ex) {
 	        // log exception first, then return Not Found (404)
 			log.error("Inside Controller modifyStudent >> " +ex.getMessage());
