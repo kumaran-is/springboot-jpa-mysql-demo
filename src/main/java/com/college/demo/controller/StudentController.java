@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.college.demo.dto.StudentDTO;
 import com.college.demo.exception.ResourceAlreadyExistsException;
 import com.college.demo.exception.ResourceNotFoundException;
+import com.college.demo.mapper.StudentMapper;
 import com.college.demo.model.Student;
 import com.college.demo.service.StudentService;
 import com.college.demo.service.StudentServiceImpl;
@@ -33,20 +35,23 @@ public class StudentController {
 	
 	@Autowired
 	private StudentService studentService;
+	@Autowired
+	private StudentMapper studentMapper;
 	
 	@GetMapping("/list")
 	@ApiOperation("Returns all the Students")
-	public ResponseEntity<List<Student>> getStudents() {
-		return ResponseEntity.ok().body(studentService.getStudents());  // return 200, with json body
+	public ResponseEntity<List<StudentDTO>> getStudents() {
+		return ResponseEntity.ok().body(studentMapper.toStudentDTOs(studentService.getStudents()));  // return 200, with json body
 	}
 	
 	@PostMapping
 	@ApiOperation("Add a new student")
-	public ResponseEntity<?> addNewStudent(@Valid @RequestBody Student student) throws URISyntaxException {
+	public ResponseEntity<?> addNewStudent(@Valid @RequestBody StudentDTO studentDTO) throws URISyntaxException {
 		try {
-			Student newStudent = studentService.addNewStudent(student);
+			Student newStudent = studentService.addNewStudent(studentMapper.toStudent(studentDTO));
 			log.debug("Inside controller >>>> "+ newStudent);
-			return ResponseEntity.created(new URI("/api/v1/student/" + newStudent.getId())).body(newStudent);
+			return ResponseEntity.status(HttpStatus.CREATED).body(studentMapper.toStudentDTO(newStudent));
+			// return ResponseEntity.created(new URI("/api/v1/student/" + newStudent.getId())).body(studentMapper.toStudentDTO(newStudent));
 		} catch (ResourceAlreadyExistsException ex) {
 			// log exception first, then return Conflict (409)
 			log.error(ex.getMessage());
@@ -75,7 +80,7 @@ public class StudentController {
 			@RequestParam(required = false) String name,
 			@RequestParam(required = false) String email) {
 		try {
-			return ResponseEntity.ok().body(studentService.updateStudent(id, name, email));
+			return ResponseEntity.ok().body(studentMapper.toStudentDTO(studentService.updateStudent(id, name, email)));
 		}  catch (ResourceNotFoundException ex) {
 	        // log exception first, then return Not Found (404)
 			log.error("Inside Controller modifyStudent >> " +ex.getMessage());
