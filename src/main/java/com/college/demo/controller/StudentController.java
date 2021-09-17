@@ -40,7 +40,7 @@ public class StudentController {
 	
 	@GetMapping("/{email}")
 	@ApiOperation("Returns a student by email")
-	public ResponseEntity<StudentDTO> findStudentByEmail(@PathVariable String email) {
+	public ResponseEntity<StudentDTO> findStudentByEmail(@Valid @PathVariable String email) {
 		try {
 			return ResponseEntity.ok().body(studentMapper.toStudentDTO(studentService.findStudentByEmail(email)));  // return 200, with JSON body
 		}  catch (ResourceNotFoundException ex) {
