@@ -46,8 +46,8 @@ public class StudentServiceImpl implements StudentService {
 		Optional<Student>  studentOptional = studentRepository.findStudentByEmail(student.getEmail());
 		
 		if(studentOptional.isPresent()) {
-			log.error("Student with Email Id "+ student.getEmail()+" already taken");
-			throw new ResourceAlreadyExistsException("Student with Email Id \"+ student.getEmail()+\" already taken");
+			log.error("Student with Email Id "+ student.getEmail() +" already taken");
+			throw new ResourceAlreadyExistsException("Student with Email Id "+ student.getEmail() +" already taken");
 		}
 		
 		return studentRepository.save(student);

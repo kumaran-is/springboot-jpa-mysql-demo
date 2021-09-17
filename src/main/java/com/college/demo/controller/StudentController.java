@@ -40,13 +40,14 @@ public class StudentController {
 	
 	@GetMapping("/{email}")
 	@ApiOperation("Returns a student by email")
-	public ResponseEntity<StudentDTO> findStudentByEmail(@Valid @PathVariable String email) {
+	public ResponseEntity<?> findStudentByEmail(@Valid @PathVariable("email") String email) {
 		try {
 			return ResponseEntity.ok().body(studentMapper.toStudentDTO(studentService.findStudentByEmail(email)));  // return 200, with JSON body
-		}  catch (ResourceNotFoundException ex) {
+		} catch (ResourceNotFoundException ex) {
 	        // log exception first, then return Not Found (404)
-			log.error("Inside Controller findStudentByEmail >> " +ex.getMessage());
-	        return ResponseEntity.notFound().build();
+			log.error(ex.getMessage());
+	       //  return ResponseEntity.notFound().build();
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
 	    } 
 	}
 	
@@ -59,46 +60,47 @@ public class StudentController {
 	@PostMapping
 	@ApiOperation("Add a new student")
 	public ResponseEntity<?> addNewStudent(@Valid @RequestBody StudentDTO studentDTO) throws URISyntaxException {
-		try {
-			Student newStudent = studentService.addNewStudent(studentMapper.toStudent(studentDTO));
-			log.debug("Inside controller >>>> "+ newStudent);
-			//return ResponseEntity.status(HttpStatus.CREATED).body(studentMapper.toStudentDTO(newStudent));
-			return ResponseEntity.created(new URI("/api/v1/student/" + newStudent.getId())).body(studentMapper.toStudentDTO(newStudent));
+		
+		try{
+			Student savedStudent = studentService.addNewStudent(studentMapper.toStudent(studentDTO));
+			return ResponseEntity.status(HttpStatus.CREATED).body(studentMapper.toStudentDTO(savedStudent));
+		//	return ResponseEntity.created(new URI("/api/v1/student/" + savedStudent.getId())).body(studentMapper.toStudentDTO(savedStudent));
 
 		} catch (ResourceAlreadyExistsException ex) {
 			// log exception first, then return Conflict (409)
-			log.error("Inside Controller addNewStudent >> "+ ex.getMessage());
-			return ResponseEntity.status(HttpStatus.CONFLICT).body("Error Message");
+			log.error(ex.getMessage());
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
 		}
 	}
 	
 	@DeleteMapping("/{id}")
 	@ApiOperation("Delete a Student")
-	public ResponseEntity<?> deleteStudentById(@PathVariable Long id) {
+	public ResponseEntity<?> deleteStudentById(@PathVariable("id") Long id) {
 		try {
 			studentService.deleteStudent(id);
-			// return ResponseEntity.noContent().build() or use below for void response
-			return ResponseEntity.ok().build();
+			return ResponseEntity.accepted().build();
 		} catch (ResourceNotFoundException ex) {
 			// log exception first, then return Not Found (404)
-			log.error("Inside Controller deleteStudentById >> " +ex.getMessage());
-	        return ResponseEntity.notFound().build();
+			log.error(ex.getMessage());
+	       // return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
 		}
 	}
 	
 	@PutMapping("/{id}")
 	@ApiOperation("Update a Student")
 	public ResponseEntity<?> modifyStudent(
-			@PathVariable Long id,
-			@RequestParam(required = false) String firstName,
-			@RequestParam(required = false) String lastName,
-			@RequestParam(required = false) String email) {
+			@PathVariable("id") Long id,
+			@RequestParam(name= "firstName", required = false) String firstName,
+			@RequestParam(name= "lastName", required = false) String lastName,
+			@RequestParam(name= "email", required = false) String email) {
 		try {
 			return ResponseEntity.ok().body(studentMapper.toStudentDTO(studentService.updateStudent(id, firstName, lastName, email)));
 		}  catch (ResourceNotFoundException ex) {
 	        // log exception first, then return Not Found (404)
-			log.error("Inside Controller modifyStudent >> " +ex.getMessage());
-	        return ResponseEntity.notFound().build();
+			log.error(ex.getMessage());
+	       // return ResponseEntity.notFound().build();
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
 	    } 
 	}
 
