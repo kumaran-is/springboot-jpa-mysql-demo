@@ -40,13 +40,14 @@ public class StudentController {
 	
 	@GetMapping("/{email}")
 	@ApiOperation("Returns a student by email")
-	public ResponseEntity<StudentDTO> findStudentByEmail(@Valid @PathVariable String email) {
+	public ResponseEntity<?> findStudentByEmail(@Valid @PathVariable String email) {
 		try {
 			return ResponseEntity.ok().body(studentMapper.toStudentDTO(studentService.findStudentByEmail(email)));  // return 200, with JSON body
-		}  catch (ResourceNotFoundException ex) {
+		} catch (ResourceNotFoundException ex) {
 	        // log exception first, then return Not Found (404)
-			log.error("Inside Controller findStudentByEmail >> " +ex.getMessage());
-	        return ResponseEntity.notFound().build();
+			log.error(ex.getMessage());
+	       //  return ResponseEntity.notFound().build();
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
 	    } 
 	}
 	
@@ -58,19 +59,18 @@ public class StudentController {
 	
 	@PostMapping
 	@ApiOperation("Add a new student")
-	public ResponseEntity<StudentDTO> addNewStudent(@Valid @RequestBody StudentDTO studentDTO) throws URISyntaxException {
-		//try {
+	public ResponseEntity<?> addNewStudent(@Valid @RequestBody StudentDTO studentDTO) throws URISyntaxException {
+		
+		try{
 			Student savedStudent = studentService.addNewStudent(studentMapper.toStudent(studentDTO));
-			log.debug("Inside controller >>>>@@@@ "+ savedStudent);
-			//return ResponseEntity.status(HttpStatus.CREATED).body(studentMapper.toStudentDTO(savedStudent));
-			//  return ResponseEntity.created(new URI("/api/v1/student/" + newStudent.getId())).body(studentMapper.toStudentDTO(savedStudent));
-			return new ResponseEntity<StudentDTO>(studentMapper.toStudentDTO(savedStudent),null , HttpStatus.CREATED);
+			return ResponseEntity.status(HttpStatus.CREATED).body(studentMapper.toStudentDTO(savedStudent));
+		//	return ResponseEntity.created(new URI("/api/v1/student/" + savedStudent.getId())).body(studentMapper.toStudentDTO(savedStudent));
 
-		/*} catch (ResourceAlreadyExistsException ex) {
+		} catch (ResourceAlreadyExistsException ex) {
 			// log exception first, then return Conflict (409)
-			/ log.error("Inside Controller addNewStudent >> "+ ex.getMessage());
-			// return ResponseEntity.status(HttpStatus.CONFLICT).body("Error Message");
-		}*/
+			log.error(ex.getMessage());
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+		}
 	}
 	
 	@DeleteMapping("/{id}")
@@ -82,8 +82,9 @@ public class StudentController {
 			return ResponseEntity.ok().build();
 		} catch (ResourceNotFoundException ex) {
 			// log exception first, then return Not Found (404)
-			log.error("Inside Controller deleteStudentById >> " +ex.getMessage());
-	        return ResponseEntity.notFound().build();
+			log.error(ex.getMessage());
+	       // return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
 		}
 	}
 	
@@ -98,8 +99,9 @@ public class StudentController {
 			return ResponseEntity.ok().body(studentMapper.toStudentDTO(studentService.updateStudent(id, firstName, lastName, email)));
 		}  catch (ResourceNotFoundException ex) {
 	        // log exception first, then return Not Found (404)
-			log.error("Inside Controller modifyStudent >> " +ex.getMessage());
-	        return ResponseEntity.notFound().build();
+			log.error(ex.getMessage());
+	       // return ResponseEntity.notFound().build();
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
 	    } 
 	}
 
