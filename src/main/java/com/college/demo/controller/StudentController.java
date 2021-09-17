@@ -50,11 +50,12 @@ public class StudentController {
 		try {
 			Student newStudent = studentService.addNewStudent(studentMapper.toStudent(studentDTO));
 			log.debug("Inside controller >>>> "+ newStudent);
-			return ResponseEntity.status(HttpStatus.CREATED).body(studentMapper.toStudentDTO(newStudent));
-			// return ResponseEntity.created(new URI("/api/v1/student/" + newStudent.getId())).body(studentMapper.toStudentDTO(newStudent));
+			//return ResponseEntity.status(HttpStatus.CREATED).body(studentMapper.toStudentDTO(newStudent));
+			return ResponseEntity.created(new URI("/api/v1/student/" + newStudent.getId())).body(studentMapper.toStudentDTO(newStudent));
+
 		} catch (ResourceAlreadyExistsException ex) {
 			// log exception first, then return Conflict (409)
-			log.error(ex.getMessage());
+			log.error("Inside Controller addNewStudent >> "+ ex.getMessage());
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("Error Message");
 		}
 	}
