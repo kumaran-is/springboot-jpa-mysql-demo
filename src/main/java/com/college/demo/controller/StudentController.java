@@ -48,13 +48,21 @@ public class StudentController {
 			log.error(ex.getMessage());
 	       //  return ResponseEntity.notFound().build();
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
-	    } 
+	    } catch (Exception ex) {
+	    	log.error(ex.getMessage());
+	    	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+	    }
 	}
 	
 	@GetMapping
 	@ApiOperation("Returns all the Students")
-	public ResponseEntity<List<StudentDTO>> findAllStudents() {
-		return ResponseEntity.ok().body(studentMapper.toStudentDTOs(studentService.getAllStudents()));  // return 200, with JSON body
+	public ResponseEntity<?> findAllStudents() {
+		try {
+			return ResponseEntity.ok().body(studentMapper.toStudentDTOs(studentService.getAllStudents()));  // return 200, with JSON body
+		} catch (Exception ex) {
+	    	log.error(ex.getMessage());
+	    	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+	    }
 	}
 	
 	@PostMapping
@@ -70,7 +78,10 @@ public class StudentController {
 			// log exception first, then return Conflict (409)
 			log.error(ex.getMessage());
 			return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
-		}
+		} catch (Exception ex) {
+	    	log.error(ex.getMessage());
+	    	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+	    }
 	}
 	
 	@DeleteMapping("/{id}")
@@ -84,7 +95,10 @@ public class StudentController {
 			log.error(ex.getMessage());
 	       // return ResponseEntity.notFound().build();
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
-		}
+		} catch (Exception ex) {
+	    	log.error(ex.getMessage());
+	    	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+	    }
 	}
 	
 	@PutMapping("/{id}")
@@ -101,7 +115,10 @@ public class StudentController {
 			log.error(ex.getMessage());
 	       // return ResponseEntity.notFound().build();
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
-	    } 
+	    }  catch (Exception ex) {
+	    	log.error(ex.getMessage());
+	    	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+	    }
 	}
 
 }
