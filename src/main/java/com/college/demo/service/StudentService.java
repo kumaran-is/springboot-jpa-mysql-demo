@@ -3,10 +3,11 @@ package com.college.demo.service;
 import java.util.List;
 import com.college.demo.model.Student;
 
-
 public interface StudentService {
 	
 	public List<Student> getStudents();
+	
+	public Student findStudentByEmail(String email);
 	
 	public Student addNewStudent(Student student);
 	

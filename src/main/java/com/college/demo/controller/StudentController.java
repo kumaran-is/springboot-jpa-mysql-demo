@@ -38,10 +38,22 @@ public class StudentController {
 	@Autowired
 	private StudentMapper studentMapper;
 	
+	@GetMapping("/{email}")
+	@ApiOperation("Returns a student by email")
+	public ResponseEntity<StudentDTO> findStudentByEmail(@PathVariable String email) {
+		try {
+			return ResponseEntity.ok().body(studentMapper.toStudentDTO(studentService.findStudentByEmail(email)));  // return 200, with JSON body
+		}  catch (ResourceNotFoundException ex) {
+	        // log exception first, then return Not Found (404)
+			log.error("Inside Controller findStudentByEmail >> " +ex.getMessage());
+	        return ResponseEntity.notFound().build();
+	    } 
+	}
+	
 	@GetMapping("/list")
 	@ApiOperation("Returns all the Students")
 	public ResponseEntity<List<StudentDTO>> getStudents() {
-		return ResponseEntity.ok().body(studentMapper.toStudentDTOs(studentService.getStudents()));  // return 200, with json body
+		return ResponseEntity.ok().body(studentMapper.toStudentDTOs(studentService.getStudents()));  // return 200, with JSON body
 	}
 	
 	@PostMapping

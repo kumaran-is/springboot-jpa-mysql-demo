@@ -23,10 +23,22 @@ public class StudentServiceImpl implements StudentService {
 	@Autowired
 	private StudentRepository studentRepository;
 	
+	
+	@Override
+	public Student findStudentByEmail(String email) throws ResourceNotFoundException {
+		
+		return studentRepository.findStudentByEmail(email)
+				.orElseThrow(() -> { 
+					log.error("Student with email " + email + " does not exists");
+					throw new ResourceNotFoundException("Student with email " + email + " does not exists");
+				 });
+	}
+	
 	@Override
 	public List<Student> getStudents() {
 		return studentRepository.findAll();
 	}
+	
 	
 	@Override
 	public Student addNewStudent(Student student) throws ResourceAlreadyExistsException {
@@ -41,6 +53,7 @@ public class StudentServiceImpl implements StudentService {
 		return studentRepository.save(student);
 	}
 	
+
 	@Override
 	public void deleteStudent(Long id) throws ResourceNotFoundException { 
 		
