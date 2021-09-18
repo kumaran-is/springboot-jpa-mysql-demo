@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,15 +31,19 @@ public class Student {
 
 	private Long id;
 
+	@NotBlank(message = "First Name is required")
 	@Column(nullable = false)
 	private String firstName;
 
+	@NotBlank(message = "Last Name is required")
 	@Column(nullable = false)
 	private String lastName;
 
+	@NotBlank(message = "Email is required")
 	@Column(nullable = false, unique = true)
 	private String email;
 
+	@NotBlank(message = "Date of Birth is required")
 	@Column(nullable = false)
 	private LocalDate dob;
 
