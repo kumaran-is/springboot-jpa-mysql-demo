@@ -13,17 +13,18 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import lombok.Data;
 
-
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @Data
 public class Auditable<U> {
 
-	@Column(name = "created_by", nullable = false)
+	// updatable flag helps to avoid the override of column's value during the update operation
+	@Column(name = "created_by",updatable = false, nullable = false)
 	@CreatedBy
 	protected U createdBy;
 
-	@Column(name = "created_date", nullable = false)
+	// updatable flag helps to avoid the override of column's value during the update operation
+	@Column(name = "created_date", updatable = false, nullable = false)
 	@CreatedDate
 	@Temporal(TIMESTAMP)
 	protected Date createdDate;
