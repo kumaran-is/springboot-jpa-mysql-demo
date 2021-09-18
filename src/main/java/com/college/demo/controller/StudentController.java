@@ -4,6 +4,8 @@ package com.college.demo.controller;
 import java.net.URISyntaxException;
 import javax.validation.Valid;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.college.demo.dto.StudentDTO;
+import com.college.demo.exception.GlobalExceptionHandler;
+import com.college.demo.exception.InvalidInputException;
 import com.college.demo.mapper.StudentMapper;
 import com.college.demo.model.Student;
 import com.college.demo.service.StudentService;
+import com.college.demo.util.CommonUtils;
 
-
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/students")
 public class StudentController {
@@ -34,6 +39,10 @@ public class StudentController {
 	@GetMapping("/{email}")
 	@ApiOperation("Returns a student by email")
 	public ResponseEntity<?> findStudentByEmail(@Valid @PathVariable("email") String email) {
+		log.debug("email >>>>>>>>>>>>>>>$$$$$$$$$$$$>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + email);
+		if(CommonUtils.isBlankString(email)) {
+			throw new InvalidInputException("703", "Email is null or blank");
+		}
 		return ResponseEntity.ok().body(studentMapper.toStudentDTO(studentService.findStudentByEmail(email)));  // return 200, with JSON body
 	}
 	
@@ -54,6 +63,9 @@ public class StudentController {
 	@DeleteMapping("/{id}")
 	@ApiOperation("Delete a Student")
 	public ResponseEntity<?> deleteStudentById(@PathVariable("id") Long id) {
+		if(null==id || id.equals(0L)) {
+			throw new InvalidInputException("702", "Id is not valid");
+		}
 		studentService.deleteStudent(id);
 		return ResponseEntity.accepted().build();
 	}
@@ -65,6 +77,9 @@ public class StudentController {
 			@RequestParam(name= "firstName", required = false) String firstName,
 			@RequestParam(name= "lastName", required = false) String lastName,
 			@RequestParam(name= "email", required = false) String email) {
+		if(null==id || id.equals(0L)) {
+			throw new InvalidInputException("702", "Id is not valid");
+		}
 		return ResponseEntity.ok().body(studentMapper.toStudentDTO(studentService.updateStudent(id, firstName, lastName, email)));
 		
 	}
