@@ -73,7 +73,7 @@ public class LoggingAspect {
 	 * @return
 	 * @throws Throwable
 	 */
-/*	@Around(value = "execution(* com.college.demo.controller.*.*(..))")
+ 	@Around(value = "execution(* com.college.demo.controller.*.*(..))")
 	public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
 		log.debug("logAround running .....");
 		if (log.isDebugEnabled()) {
@@ -93,7 +93,7 @@ public class LoggingAspect {
 			throw e;
 		}
 
-	} */
+	} 
 	
 	/**
 	 * Advice that logs methods throwing exceptions.
@@ -102,11 +102,11 @@ public class LoggingAspect {
 	 * @param e         exception
 	 */
 
-	/*@AfterThrowing(pointcut = "execution(* com.college.demo.controller.*.*(..))", throwing = "error")
+	@AfterThrowing(pointcut = "execution(* com.college.demo.controller.*.*(..))", throwing = "error")
 	public void logAfterThrowing(JoinPoint joinPoint, Throwable error) {
 		log.debug("logAfterThrowing running .....");
 		log.error("Exception in {}.{}() with cause = {}", joinPoint.getSignature().getDeclaringTypeName(),
 				joinPoint.getSignature().getName(), error.getCause() != null ? error.getCause() : "NULL");
-	} */
+	} 
 }
 
