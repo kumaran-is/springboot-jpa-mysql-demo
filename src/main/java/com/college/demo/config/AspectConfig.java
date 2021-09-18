@@ -35,7 +35,7 @@ public class AspectConfig {
 		log.debug("Inside One Method Parameter After Returning"+ object);
 	} */
 	
-	@Around(value = "execution(* com.college.demo.controller.*.*(..))")
+	/*@Around(value = "execution(* com.college.demo.controller.*.*(..))")
 	public Object aroundAdvice(ProceedingJoinPoint proceedingJoinPoint) {
 		
 		Object returningObject = null;
@@ -55,6 +55,6 @@ public class AspectConfig {
 		
 		return returningObject;
 			
-	}
+	} */
 }
 
