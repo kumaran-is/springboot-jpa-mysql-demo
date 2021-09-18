@@ -17,55 +17,42 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class LoggingAspect {
 	
-/*	@Before(value = "execution(* com.college.demo.controller.*.*(..))")
+   @Before(value = "execution(* com.college.demo.controller.*.*(..))")
 	public void logBefore(JoinPoint joinPoint) {
 		log.debug("logBefore running .....");
 		log.debug("Enter: {}() with argument[s] = {}", joinPoint.getSignature().getDeclaringTypeName(),
 				joinPoint.getSignature().getName(), Arrays.toString(joinPoint.getArgs()));
 	}
 	
-	@Before(value = "execution(* com.college.demo.controller.*.*(..)) and args(object)")
+	/*@Before(value = "execution(* com.college.demo.controller.*.*(..)) and args(object)")
 	public void oneMethodParameterLogBefore(JoinPoint joinPoint, Object object) {
 		log.debug("Inside One Method Parameter Before Advice"+ object);
-	}
+	} */
 	
-	@After(value = "execution(* com.college.demo.controller.*.*(..)) and args(object)")
-	public void oneMethodParameterLogAfter(JoinPoint joinPoint, Object object) {
-		log.debug("ogAfter running"+ object);
-		log.debug("Enter: {}() with argument[s] = {}", joinPoint.getSignature().getDeclaringTypeName(),
-				joinPoint.getSignature().getName(), Arrays.toString(joinPoint.getArgs()))
-	}
+	/**
+	 * Run after the method returned a result.
+	 * @param joinPoint
+	 */
 	
-	
-	@AfterReturning(value = "execution(* com.college.demo.controller.*.*(..)) and args(object)", returning = "returningObject")
-	public void logAfterReturning(JoinPoint joinPoint, Object object, Object returningObject) {
-		log.debug("logAfterReturning running ....."+ object);
+	@After(value = "execution(* com.college.demo.controller.*.*(..))")
+	public void logAfter(JoinPoint joinPoint) {
+		log.debug("logAfter running .....");
 		log.debug("Enter: {}() with argument[s] = {}", joinPoint.getSignature().getDeclaringTypeName(),
 				joinPoint.getSignature().getName(), Arrays.toString(joinPoint.getArgs()));
-	} */
+	}
+
+	/**
+	 * Run after the method returned a result, intercept the returned result as well.
+	 * @param joinPoint
+	 * @param result
+	 */
+	@AfterReturning(value = "execution(* com.college.demo.controller.*.*(..))", returning = "returningObject")
+	public void logAfterReturning(JoinPoint joinPoint, Object returningObject) {
+		log.debug("logAfterReturning running .....");
+		log.debug("Enter: {}() with argument[s] = {}", joinPoint.getSignature().getDeclaringTypeName(),
+				joinPoint.getSignature().getName(), Arrays.toString(joinPoint.getArgs()));
+	}
 	
-	/*@Around(value = "execution(* com.college.demo.controller.*.*(..))")
-	public Object logAroundAdvice(ProceedingJoinPoint proceedingJoinPoint) {
-		
-		log.debug("logAround running .....");
-		Object returningObject = null;
-		String targetClass = proceedingJoinPoint.getTarget().getClass().getSimpleName();
-        String targetMethod = proceedingJoinPoint.getSignature().getName();
-        Object[] argsArray = proceedingJoinPoint.getArgs();
-       
-        log.debug("Executing {}.{} with argument[s]: {}", targetClass, targetMethod, argsArray);
-		
-		try {
-			returningObject = proceedingJoinPoint.proceed();
-		} catch(Throwable e) {
-			e.printStackTrace();
-		}
-		
-		log.debug("{}.{} returns: {} ", targetClass, targetMethod, returningObject);
-		
-		return returningObject;
-			
-	} */
 	
 	/**
 	 * Run around the method execution.
