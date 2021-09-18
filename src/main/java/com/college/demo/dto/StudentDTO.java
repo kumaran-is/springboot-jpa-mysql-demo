@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModel;
@@ -41,6 +43,7 @@ public class StudentDTO {
 
 	@ApiModelProperty(value = "Student Date of Birth in YYYY-MM-DD format", name = "dob", required = true, example = "2000-01-25")
 	@NotNull(message = "Date of Birth cannot be null")
+	@Past(message = "Date of Birth cannot be in the present or in the future")
 	private LocalDate dob;
 
 	@ApiModelProperty(value = "System calculated age of the student based on the student DOB, never stored in the database", name = "age")
