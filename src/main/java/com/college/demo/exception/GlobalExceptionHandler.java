@@ -27,7 +27,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 				request.getDescription(false), ex);
 		// log exception first, then return Not Found (404)
 		log.error(ex.getMessage());
-		return new ResponseEntity<>(errorDetails, errorDetails.getStatus());
+		return new ResponseEntity<ErrorDetails>(errorDetails, errorDetails.getStatus());
 	}
 
 	@ExceptionHandler(ResourceAlreadyExistsException.class)
@@ -37,7 +37,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 				request.getDescription(false), ex);
 		// log exception first, then return Conflict (409)
 		log.error(ex.getMessage());
-		return new ResponseEntity<>(errorDetails, errorDetails.getStatus());
+		return new ResponseEntity<ErrorDetails>(errorDetails, errorDetails.getStatus());
 	}
 
 	@ExceptionHandler(InvalidInputException.class)
@@ -46,7 +46,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 				request.getDescription(false), ex);
 		// log exception first, then return Bad Request (400)
 		log.error(ex.getMessage());
-		return new ResponseEntity<>(errorDetails, errorDetails.getStatus());
+		return new ResponseEntity<ErrorDetails>(errorDetails, errorDetails.getStatus());
 	}
 
 	@Override
@@ -69,6 +69,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		ErrorDetails errorDetails = new ErrorDetails(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(),
 				request.getDescription(false), ex);
 		log.error(ex.getMessage());
-		return new ResponseEntity<>(errorDetails, errorDetails.getStatus());
+		return new ResponseEntity<ErrorDetails>(errorDetails, errorDetails.getStatus());
 	}
 }

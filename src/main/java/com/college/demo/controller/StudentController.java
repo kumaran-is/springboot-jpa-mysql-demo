@@ -2,6 +2,8 @@ package com.college.demo.controller;
 
 // import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
+
 import javax.validation.Valid;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +36,7 @@ public class StudentController {
 
 	@GetMapping("/{email}")
 	@ApiOperation("Returns a student by email")
-	public ResponseEntity<?> findStudentByEmail(@Valid @PathVariable("email") String email) {
+	public ResponseEntity<StudentDTO> findStudentByEmail(@Valid @PathVariable("email") String email) {
 		if (CommonUtils.isBlankString(email)) {
 			throw new InvalidInputException("703", "Email is null or blank");
 		}
@@ -44,14 +46,14 @@ public class StudentController {
 
 	@GetMapping
 	@ApiOperation("Returns all the Students")
-	public ResponseEntity<?> findAllStudents() {
+	public ResponseEntity<List<StudentDTO>> findAllStudents() {
 		// return 200, with JSON body
 		return ResponseEntity.ok().body(studentMapper.toStudentDTOs(studentService.getAllStudents()));
 	}
 
 	@PostMapping
 	@ApiOperation("Add a new student")
-	public ResponseEntity<?> addNewStudent(@Valid @RequestBody StudentDTO studentDTO) throws URISyntaxException {
+	public ResponseEntity<StudentDTO> addNewStudent(@Valid @RequestBody StudentDTO studentDTO) throws URISyntaxException {
 		Student savedStudent = studentService.addNewStudent(studentMapper.toStudent(studentDTO));
 		return ResponseEntity.status(HttpStatus.CREATED).body(studentMapper.toStudentDTO(savedStudent));
 		// return ResponseEntity.created(new URI("/api/v1/student/" +
@@ -60,7 +62,7 @@ public class StudentController {
 
 	@DeleteMapping("/{id}")
 	@ApiOperation("Delete a Student")
-	public ResponseEntity<?> deleteStudentById(@PathVariable("id") Long id) {
+	public ResponseEntity<Void> deleteStudentById(@PathVariable("id") Long id) {
 		if (null == id || id.equals(0L)) {
 			throw new InvalidInputException("702", "Id is not valid");
 		}
@@ -74,7 +76,7 @@ public class StudentController {
 
 	@PutMapping("/{id}")
 	@ApiOperation("Update a Student")
-	public ResponseEntity<?> modifyStudent(@PathVariable("id") Long id,
+	public ResponseEntity<StudentDTO> modifyStudent(@PathVariable("id") Long id,
 			@RequestParam(name = "firstName", required = false) String firstName,
 			@RequestParam(name = "lastName", required = false) String lastName,
 			@RequestParam(name = "email", required = false) String email) {
