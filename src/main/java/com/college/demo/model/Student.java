@@ -20,36 +20,29 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Student {
-	
+
 	@Id
 	@Column(nullable = false, updatable = false)
-	@SequenceGenerator(
-			name = "student_sequence",
-			sequenceName = "student_sequence",
-			allocationSize = 1
-	)
-	@GeneratedValue(
-			strategy = GenerationType.SEQUENCE,
-			generator =  "student_sequence"
-	)
+	@SequenceGenerator(name = "student_sequence", sequenceName = "student_sequence", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_sequence")
 
 	private Long id;
-	
+
 	@Column(nullable = false)
 	private String firstName;
-	
+
 	@Column(nullable = false)
 	private String lastName;
-	
+
 	@Column(nullable = false, unique = true)
 	private String email;
-	
+
 	@Column(nullable = false)
 	private LocalDate dob;
-	
+
 	@Transient
 	private Integer age;
-	
+
 	public Integer getAge() {
 		return Period.between(dob, LocalDate.now()).getYears();
 	}
@@ -57,5 +50,5 @@ public class Student {
 	public void setAge(Integer age) {
 		this.age = age;
 	}
-	
+
 }

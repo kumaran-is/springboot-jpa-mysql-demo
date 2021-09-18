@@ -6,7 +6,6 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.college.demo.exception.BusinessException;
 import com.college.demo.exception.ResourceAlreadyExistsException;
 import com.college.demo.exception.ResourceNotFoundException;
 import com.college.demo.model.Student;
@@ -22,9 +21,8 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public Student findStudentByEmail(String email) {
 
-		return studentRepository.findStudentByEmail(email).orElseThrow(() -> {
-			throw new ResourceNotFoundException("700", "Student with email " + email + " does not exists");
-		});
+		return studentRepository.findStudentByEmail(email).orElseThrow(
+				() -> new ResourceNotFoundException("700", "Student with email " + email + " does not exists"));
 
 	}
 
@@ -63,9 +61,8 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public Student updateStudent(Long id, String firstName, String lastName, String email) {
 
-		Student student = studentRepository.findById(id).orElseThrow(() -> {
-			throw new ResourceNotFoundException("700", "Student with id " + id + " does not exists");
-		});
+		Student student = studentRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("700", "Student with id " + id + " does not exists"));
 
 		if (firstName != null && firstName.length() > 0 && !Objects.equals(student.getFirstName(), firstName)) {
 			student.setFirstName(firstName);
