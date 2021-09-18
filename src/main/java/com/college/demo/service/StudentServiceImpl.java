@@ -3,20 +3,16 @@ package com.college.demo.service;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.college.demo.exception.BusinessException;
 import com.college.demo.exception.ResourceAlreadyExistsException;
 import com.college.demo.exception.ResourceNotFoundException;
 import com.college.demo.model.Student;
 import com.college.demo.repository.StudentRepository;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
+
 @Service
 @Transactional
 public class StudentServiceImpl implements StudentService {
@@ -32,7 +28,6 @@ public class StudentServiceImpl implements StudentService {
 		{
 			return studentRepository.findStudentByEmail(email)
 				.orElseThrow(() -> { 
-					log.error("Student with email " + email + " does not exists");
 					throw new ResourceNotFoundException("700", "Student with email " + email + " does not exists");
 				 });
 		} catch (ResourceNotFoundException e) {
@@ -40,12 +35,12 @@ public class StudentServiceImpl implements StudentService {
 		} catch (IllegalArgumentException e) {
 			throw new BusinessException("600", "Email is null" + e.getMessage(), e);
 		} catch (Exception e) {
-			throw new BusinessException("601","Something went wrong in Service layer while fetching student by email" + e.getMessage(), e);
+			throw new BusinessException("601", "Something went wrong in Service layer while fetching student by email" + e.getMessage(), e);
 		}	
 	}
 	
 	@Override
-	public List<Student> getAllStudents() throws BusinessException {
+	public List<Student> getAllStudents() {
 		try
 		{
 			return studentRepository.findAll();
@@ -56,13 +51,12 @@ public class StudentServiceImpl implements StudentService {
 	
 	
 	@Override
-	public Student addNewStudent(Student student) throws BusinessException {
+	public Student addNewStudent(Student student) {
 		try
 		{
 			Optional<Student>  studentOptional = studentRepository.findStudentByEmail(student.getEmail());
 			
 			if(studentOptional.isPresent()) {
-				log.error("Student with Email Id "+ student.getEmail() +" already taken");
 				throw new ResourceAlreadyExistsException("701", "Student with Email Id "+ student.getEmail() +" already taken");
 			}
 			
@@ -78,13 +72,12 @@ public class StudentServiceImpl implements StudentService {
 	
 
 	@Override
-	public void deleteStudent(Long id) throws BusinessException { 
+	public void deleteStudent(Long id) { 
 		
 		try 
 		{
 			boolean exists = studentRepository.existsById(id);
 			if(!exists) {
-				log.error("Student with id " + id + " does not exists");
 				throw new ResourceNotFoundException("700", "Student with id " + id + " does not exists");
 			}
 			
@@ -100,12 +93,11 @@ public class StudentServiceImpl implements StudentService {
 	
 	
 	@Override
-	public Student updateStudent(Long id, String firstName, String lastName, String email)  throws BusinessException { 
+	public Student updateStudent(Long id, String firstName, String lastName, String email) { 
 		try 
 		{
 			Student student = studentRepository.findById(id)
 					.orElseThrow(() -> { 
-						log.error("Student with id " + id + " does not exists");
 						throw new ResourceNotFoundException("700", "Student with id " + id + " does not exists");
 					 });
 			

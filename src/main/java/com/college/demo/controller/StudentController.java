@@ -4,7 +4,6 @@ package com.college.demo.controller;
 import java.net.URISyntaxException;
 import javax.validation.Valid;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,14 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.college.demo.dto.StudentDTO;
-import com.college.demo.exception.GlobalExceptionHandler;
 import com.college.demo.exception.InvalidInputException;
 import com.college.demo.mapper.StudentMapper;
 import com.college.demo.model.Student;
 import com.college.demo.service.StudentService;
 import com.college.demo.util.CommonUtils;
 
-@Slf4j
+
 @RestController
 @RequestMapping("/api/v1/students")
 public class StudentController {
@@ -39,7 +37,6 @@ public class StudentController {
 	@GetMapping("/{email}")
 	@ApiOperation("Returns a student by email")
 	public ResponseEntity<?> findStudentByEmail(@Valid @PathVariable("email") String email) {
-		log.debug("email >>>>>>>>>>>>>>>$$$$$$$$$$$$>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + email);
 		if(CommonUtils.isBlankString(email)) {
 			throw new InvalidInputException("703", "Email is null or blank");
 		}
@@ -67,7 +64,8 @@ public class StudentController {
 			throw new InvalidInputException("702", "Id is not valid");
 		}
 		studentService.deleteStudent(id);
-		return ResponseEntity.accepted().build();
+		// return ResponseEntity.accepted().build(); // The request has been accepted for processing, but the processing has not been completed
+		return ResponseEntity.noContent().build(); // no content to return
 	}
 	
 	@PutMapping("/{id}")

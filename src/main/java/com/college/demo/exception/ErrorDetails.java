@@ -7,9 +7,13 @@ import org.springframework.http.HttpStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 
+/*
+ * ErrorDetails to represent API errors. The goal of this class is to wrap exceptions in a nice 
+ * JSON representation to make life easier for API clients.
+ */
 @Getter
 public class ErrorDetails {
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy hh:mm:ss")
 	private LocalDateTime timestamp; // property holds the date-time instance of when the error happened.
 	private String message; // property holds a user-friendly message about the error.
 	private String details;  // property holds details about the call
