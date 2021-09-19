@@ -9,6 +9,9 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.college.demo.audit.Auditable;
+import com.college.demo.audit.AuditableDTO;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -19,7 +22,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel(description = "Student DTO")
-public class StudentDTO {
+public class StudentDTO extends AuditableDTO<String> {
 
 	private static final long serialVersionUID = 1L;
 
