@@ -1,17 +1,14 @@
 package com.college.demo.dto;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
-import com.college.demo.audit.Auditable;
 import com.college.demo.audit.AuditableDTO;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -22,7 +19,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel(description = "Student DTO")
-public class StudentDTO extends AuditableDTO<String> {
+public class StudentDTO extends AuditableDTO<String> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

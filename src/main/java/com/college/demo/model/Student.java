@@ -45,7 +45,7 @@ public class Student extends Auditable<String> {
 	private String email;
 
 	
-	@Column(nullable = false)
+	@Column(columnDefinition = "DATE", nullable = false)
 	private LocalDate dob;
 
 	@Transient
