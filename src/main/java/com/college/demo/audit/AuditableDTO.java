@@ -15,15 +15,15 @@ public class AuditableDTO<U> {
 
 		private static final long serialVersionUID = 1L;
 		
-		@ApiModelProperty(value = "Audit field that refers to an user who created the record", name = "createdBy")
+		@ApiModelProperty(value = "Audit field generated automatically by JPA layer that refers to an user who created the record", name = "createdBy")
 		protected U createdBy;
 
-		@ApiModelProperty(value = "Audit field that refers to a date when the record was created", name = "createdDate")
+		@ApiModelProperty(value = "Audit field generated automatically by JPA layer that refers to a date when the record was created", name = "createdDate")
 		protected Date createdDate;
 
-		@ApiModelProperty(value = "Audit field that refers to an user who last modified the record", name = "lastModifiedBy")
+		@ApiModelProperty(value = "Audit field generated automatically by JPA layer refers to an user who last modified the record", name = "lastModifiedBy")
 		protected U lastModifiedBy;
 
-		@ApiModelProperty(value = "Audit field that refers to a date when the record was last modified", name = "lastModifiedDate")
+		@ApiModelProperty(value = "Audit field generated automatically by JPA layer refers to a date when the record was last modified", name = "lastModifiedDate")
 		protected Date lastModifiedDate;
 }
