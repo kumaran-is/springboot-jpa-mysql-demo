@@ -3,7 +3,7 @@ package com.college.demo.service;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.college.demo.exception.ResourceAlreadyExistsException;
@@ -27,6 +27,7 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Student> getAllStudents() {
 
 		return studentRepository.findAll();
