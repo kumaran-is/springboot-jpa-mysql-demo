@@ -1,11 +1,24 @@
 package com.college.demo.dto;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Set;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import com.college.demo.audit.AuditableDTO;
-import io.swagger.annotations.ApiModelProperty;
+import com.college.demo.constants.Gender;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ApiModel(description = "StudentContactInfo DTO")
 public class StudentContactInfoDTO extends AuditableDTO<String> implements Serializable {
 
 	private static final long serialVersionUID = 1L;

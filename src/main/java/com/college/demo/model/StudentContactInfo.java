@@ -1,7 +1,9 @@
 package com.college.demo.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -30,6 +32,6 @@ public class StudentContactInfo extends AbstractEntity {
 	@Column(name = "zipcode", nullable = false)
     private String zipcode;
 	
-	@OneToOne(mappedBy = "studentContactInfo")
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "studentContactInfo")
 	private Student student;
 }

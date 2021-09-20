@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.college.demo.constants.Status;
 
 @Data
 @AllArgsConstructor
@@ -40,6 +41,6 @@ public class EnrollmentDTO extends AuditableDTO<String> implements Serializable 
 	@ApiModelProperty(value = "Student course status", name = "status", required = true, example = "[ENROLLED, INPROGRESS, COMPLETE, WITHDRAWAL, CANCEL]")
 	@NotNull(message = "Student course status cannot be null")
 	@NotBlank(message = "Student course status is required")
-	private String status;
+	private Status status;
 
 }

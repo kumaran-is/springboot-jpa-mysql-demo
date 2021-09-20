@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import com.college.demo.audit.AuditableDTO;
+import com.college.demo.constants.Gender;
 import com.college.demo.model.Enrollment;
 
 import io.swagger.annotations.ApiModel;
@@ -52,8 +53,8 @@ public class StudentDTO extends AuditableDTO<String> implements Serializable {
 	
 	@ApiModelProperty(value = "Student's gender", name = "gender", required = true, example = "[MALE, FEMALE]")
 	@NotNull(message = "Student's gender cannot be null")
-	@NotBlank(message = "Student's gender is required")
-	private String gender;
+	// @NotBlank(message = "Student's gender is required")
+	private Gender gender;
 
 	@ApiModelProperty(value = "System calculated age of the student based on the student DOB, never stored in the database", name = "age")
 	private Integer age;

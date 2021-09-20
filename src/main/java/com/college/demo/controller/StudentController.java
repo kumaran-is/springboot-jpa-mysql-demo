@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.college.demo.aop.LoggingAspect;
 import com.college.demo.dto.StudentDTO;
 import com.college.demo.exception.InvalidInputException;
 import com.college.demo.mapper.StudentMapper;
@@ -25,6 +29,7 @@ import com.college.demo.model.Student;
 import com.college.demo.service.StudentService;
 import com.college.demo.util.CommonUtils;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/students")
 public class StudentController {
@@ -54,6 +59,9 @@ public class StudentController {
 	@PostMapping
 	@ApiOperation("Add a new student")
 	public ResponseEntity<StudentDTO> addNewStudent(@Valid @RequestBody StudentDTO studentDTO) throws URISyntaxException {
+		
+		log.debug("addNewStudent request studentDTO ....." + studentDTO);
+		log.debug("addNewStudent studentMapper.toStudent(studentDTO)>>>>>>> " + studentMapper.toStudent(studentDTO));
 		Student savedStudent = studentService.addNewStudent(studentMapper.toStudent(studentDTO));
 		return ResponseEntity.status(HttpStatus.CREATED).body(studentMapper.toStudentDTO(savedStudent));
 		// return ResponseEntity.created(new URI("/api/v1/student/" +
