@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Course extends AbstractEntity {
 	
-	@Column(nullable = false)
+	@Column(name = "course_name", nullable = false)
 	private String courseName;
 	
-	@Column(nullable = false)
+	@Column(name = "duration", nullable = false)
 	private Integer duration;
 }

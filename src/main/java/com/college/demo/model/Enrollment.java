@@ -15,15 +15,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Enrollment extends AbstractEntity {
 	
-	@Column(columnDefinition = "DATE", nullable = false)
+	@Column(name = "start_date", columnDefinition = "DATE", nullable = false)
 	private LocalDate startDate;
 	
-	@Column(columnDefinition = "DATE", nullable = false)
+	@Column(name = "end_date", columnDefinition = "DATE", nullable = false)
 	private LocalDate endDate;
 	
+	@Column(name = "score", columnDefinition = "DATE", nullable = false)
 	private Float score;
 	
-	@Column(nullable = false)
+	@Column(name = "status", nullable = false)
 	private String status;
 
 }

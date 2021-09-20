@@ -15,19 +15,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class StudentContactInfo extends AbstractEntity {
 
-	@Column(nullable = false)
+	@Column(name = "phone", nullable = false)
 	private String phone;
 	
-	@Column(nullable = false)
+	@Column(name = "street", nullable = false)
     private String street;
 	
-	@Column(nullable = false)
+	@Column(name = "city", nullable = false)
     private String city;
 	
-	@Column(nullable = false)
+	@Column(name = "state", nullable = false)
     private String state;
 	
-	@Column(nullable = false)
+	@Column(name = "zipcode", nullable = false)
     private String zipcode;
 	
 	@OneToOne(mappedBy = "studentContactInfo")

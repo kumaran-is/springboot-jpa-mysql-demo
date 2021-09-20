@@ -19,17 +19,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Student extends AbstractEntity{
 
-	@Column(nullable = false)
+	@Column(name = "first_name", nullable = false)
 	private String firstName;
 
-	@Column(nullable = false)
+	@Column(name = "last_name", nullable = false)
 	private String lastName;
 
-	@Column(nullable = false, unique = true)
+	@Column(name = "email", nullable = false, unique = true)
 	private String email;
-
 	
-	@Column(columnDefinition = "DATE", nullable = false)
+	@Column(name = "dob", columnDefinition = "DATE", nullable = false)
 	private LocalDate dob;
 	
 	@OneToOne
