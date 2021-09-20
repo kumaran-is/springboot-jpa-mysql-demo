@@ -58,7 +58,7 @@ public class StudentController {
 		// studentMapper.toStudentDTOs(studentService.getAllStudents());
 		List<Student> student= studentService.getAllStudents();
 		log.debug("student >>>>>>>>>>>>>>>>>>>>>>>>>>>$$$....." + student);
-		//List<StudentDTO> studentDTO=  studentMapper.toStudentDTOs(student);
+		//List<StudentDTO> studentDTO =  studentMapper.toStudentDTOs(student);
 		//log.debug("studentDTO >>>>>>>>>>>>>>>>>>>>>>>>>>>@@@@@@....." + studentDTO);
 		return ResponseEntity.ok().body(student);
 	}
