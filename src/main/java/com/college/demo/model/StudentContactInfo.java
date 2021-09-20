@@ -39,7 +39,7 @@ public class StudentContactInfo extends AbstractEntity {
 	
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
-	@JsonIgnoreProperties("studentContactInfo")
+	@JsonIgnoreProperties(value = {"studentContactInfo", "hibernateLazyInitializer"})
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "studentContactInfo")
 	private Student student;
 }
