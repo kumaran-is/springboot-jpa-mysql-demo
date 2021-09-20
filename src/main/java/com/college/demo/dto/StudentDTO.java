@@ -9,6 +9,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import com.college.demo.audit.AuditableDTO;
+import com.college.demo.model.StudentContactInfo;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -48,5 +50,8 @@ public class StudentDTO extends AuditableDTO<String> implements Serializable {
 
 	@ApiModelProperty(value = "System calculated age of the student based on the student DOB, never stored in the database", name = "age")
 	private Integer age;
+	
+	@ApiModelProperty(value = "Student contact information", name = "studentContactInfo")
+	private StudentContactInfo studentContactInfo;
 
 }
