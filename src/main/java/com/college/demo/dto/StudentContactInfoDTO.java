@@ -1,24 +1,28 @@
 package com.college.demo.dto;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.Set;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import com.college.demo.audit.AuditableDTO;
-import com.college.demo.constants.Gender;
+import com.college.demo.model.StudentContactInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel(description = "StudentContactInfo DTO")
+@EqualsAndHashCode(exclude = {"student"})
+@ToString(exclude = {"student"})
 public class StudentContactInfoDTO extends AuditableDTO<String> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -51,6 +55,7 @@ public class StudentContactInfoDTO extends AuditableDTO<String> implements Seria
 	@ApiModelProperty(value = "Student's basic detail", name = "studentDTO", required = true)
 	@NotNull(message = "Student cannot be null")
 	@NotBlank(message = "Student is required")
+	@JsonIgnoreProperties(value = {"studentContactInfo", "hibernateLazyInitializer"})
 	private StudentDTO student;
 
 }

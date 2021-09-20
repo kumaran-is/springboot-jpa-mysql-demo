@@ -13,17 +13,26 @@ import javax.validation.constraints.Size;
 import com.college.demo.audit.AuditableDTO;
 import com.college.demo.constants.Gender;
 import com.college.demo.model.Enrollment;
+import com.college.demo.model.Student;
+import com.college.demo.model.StudentContactInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel(description = "Student DTO")
+@EqualsAndHashCode(exclude = {"studentContactInfo", "enrollments"})
+@ToString(exclude = {"studentContactInfo", "enrollments"})
 public class StudentDTO extends AuditableDTO<String> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -53,16 +62,17 @@ public class StudentDTO extends AuditableDTO<String> implements Serializable {
 	
 	@ApiModelProperty(value = "Student's gender", name = "gender", required = true, example = "[MALE, FEMALE]")
 	@NotNull(message = "Student's gender cannot be null")
-	// @NotBlank(message = "Student's gender is required")
 	private Gender gender;
 
 	@ApiModelProperty(value = "System calculated age of the student based on the student DOB, never stored in the database", name = "age")
 	private Integer age;
 	
 	@ApiModelProperty(value = "Student's contact information", name = "studentContactInfo")
+	@JsonIgnoreProperties(value = {"student", "hibernateLazyInitializer"})
 	private StudentContactInfoDTO studentContactInfo;
 	
 	@ApiModelProperty(value = "Set of enrollments(courses) enrolled by a student")
-	private Set<EnrollmentDTO>  enrollments = new HashSet<EnrollmentDTO>();
+	@JsonIgnoreProperties
+	private Set<EnrollmentDTO> enrollments = new HashSet<EnrollmentDTO>();
 
 }
