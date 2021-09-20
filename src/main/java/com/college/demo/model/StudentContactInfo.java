@@ -32,6 +32,6 @@ public class StudentContactInfo extends AbstractEntity {
 	@Column(name = "zipcode", nullable = false)
     private String zipcode;
 	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "studentContactInfo")
-	private Student student;
+	//@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "studentContactInfo")
+	// private Student student;
 }

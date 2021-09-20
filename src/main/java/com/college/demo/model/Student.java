@@ -21,13 +21,17 @@ import com.college.demo.constants.Gender;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "student")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+//@EqualsAndHashCode(callSuper=false, exclude={"studentContactInfo", "enrollments"})
+//@ToString(exclude = {"studentContactInfo", "enrollments"})
 public class Student extends AbstractEntity{
 
 	@Column(name = "first_name", nullable = false)
@@ -46,6 +50,8 @@ public class Student extends AbstractEntity{
 	@Column(name = "gender", nullable = false)
 	private Gender gender;
 	
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "student_contact_info_id")
 	private StudentContactInfo studentContactInfo;

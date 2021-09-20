@@ -51,9 +51,16 @@ public class StudentController {
 
 	@GetMapping
 	@ApiOperation("Returns all the Students")
-	public ResponseEntity<List<StudentDTO>> findAllStudents() {
+	// public ResponseEntity<List<StudentDTO>> findAllStudents() {
+	public ResponseEntity<?> findAllStudents() {
 		// return 200, with JSON body
-		return ResponseEntity.ok().body(studentMapper.toStudentDTOs(studentService.getAllStudents()));
+		
+		// studentMapper.toStudentDTOs(studentService.getAllStudents());
+		List<Student> student= studentService.getAllStudents();
+		log.debug("student >>>>>>>>>>>>>>>>>>>>>>>>>>>$$$....." + student);
+		List<StudentDTO> studentDTO=  studentMapper.toStudentDTOs(student);
+		log.debug("studentDTO >>>>>>>>>>>>>>>>>>>>>>>>>>>@@@@@@....." + studentDTO);
+		return ResponseEntity.ok().body(studentDTO);
 	}
 
 	@PostMapping

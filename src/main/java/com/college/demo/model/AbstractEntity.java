@@ -9,6 +9,7 @@ import javax.persistence.MappedSuperclass;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.college.demo.audit.Auditable;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 
 @MappedSuperclass
