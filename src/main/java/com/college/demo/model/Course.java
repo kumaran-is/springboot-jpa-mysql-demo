@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,5 +33,9 @@ public class Course extends AbstractEntity {
 	@JoinTable(name = "course_faculty",
 		joinColumns = { @JoinColumn(name = "course_id")},
 		inverseJoinColumns = { @JoinColumn (name = "faculty_id")})
-	private Set<Faculty> Faculties = new HashSet<>();
+	private Set<Faculty> Faculties = new HashSet<Faculty>();
+	
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "course_id")
+	private Set<Enrollment>  enrollments = new HashSet<Enrollment>();
 }

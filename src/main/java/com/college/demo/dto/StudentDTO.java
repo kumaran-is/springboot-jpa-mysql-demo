@@ -2,6 +2,8 @@ package com.college.demo.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -9,7 +11,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import com.college.demo.audit.AuditableDTO;
-import com.college.demo.model.StudentContactInfo;
+import com.college.demo.model.Enrollment;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -43,15 +45,23 @@ public class StudentDTO extends AuditableDTO<String> implements Serializable {
 	@Email(message = "Student's email should be a valid email format")
 	private String email;
 
-	@ApiModelProperty(value = "Student date of birth in YYYY-MM-DD format", name = "dob", required = true, example = "2000-01-25")
+	@ApiModelProperty(value = "Student's date of birth in YYYY-MM-DD format", name = "dob", required = true, example = "2000-01-25")
 	@NotNull(message = "Student's date of birth cannot be null")
 	@Past(message = "Student's date of birth cannot be in the present or in the future")
 	private LocalDate dob;
+	
+	@ApiModelProperty(value = "Student's gender", name = "gender", required = true, example = "[MALE, FEMALE]")
+	@NotNull(message = "Student's gender cannot be null")
+	@NotBlank(message = "Student's gender is required")
+	private String gender;
 
 	@ApiModelProperty(value = "System calculated age of the student based on the student DOB, never stored in the database", name = "age")
 	private Integer age;
 	
-	@ApiModelProperty(value = "Student contact information", name = "studentContactInfo")
-	private StudentContactInfo studentContactInfo;
+	@ApiModelProperty(value = "Student's contact information", name = "studentContactInfo")
+	private StudentContactInfoDTO studentContactInfo;
+	
+	@ApiModelProperty(value = "Set of enrollments(courses) enrolled by a student")
+	private Set<EnrollmentDTO>  enrollments = new HashSet<EnrollmentDTO>();
 
 }

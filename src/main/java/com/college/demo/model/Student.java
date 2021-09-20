@@ -2,9 +2,16 @@ package com.college.demo.model;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -31,9 +38,17 @@ public class Student extends AbstractEntity{
 	@Column(name = "dob", columnDefinition = "DATE", nullable = false)
 	private LocalDate dob;
 	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "gender", nullable = false)
+	private Gender gender;
+	
 	@OneToOne
 	@JoinColumn(name = "student_contact_info_id")
 	private StudentContactInfo studentContactInfo;
+	
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "student_id")
+	private Set<Enrollment>  enrollments = new HashSet<Enrollment>();
 
 	@Transient
 	private Integer age;

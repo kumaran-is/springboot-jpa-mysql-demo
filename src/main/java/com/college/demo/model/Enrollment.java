@@ -3,6 +3,8 @@ package com.college.demo.model;
 import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,7 +26,8 @@ public class Enrollment extends AbstractEntity {
 	@Column(name = "score", columnDefinition = "DATE", nullable = false)
 	private Float score;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name = "status", nullable = false)
-	private String status;
+	private Status status;
 
 }

@@ -4,8 +4,6 @@ import java.io.Serializable;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import com.college.demo.audit.AuditableDTO;
-import com.college.demo.model.Student;
-
 import io.swagger.annotations.ApiModelProperty;
 
 public class StudentContactInfoDTO extends AuditableDTO<String> implements Serializable {
@@ -40,6 +38,6 @@ public class StudentContactInfoDTO extends AuditableDTO<String> implements Seria
 	@ApiModelProperty(value = "Student's basic detail", name = "studentDTO", required = true)
 	@NotNull(message = "Student cannot be null")
 	@NotBlank(message = "Student is required")
-	private StudentDTO studentDTO;
+	private StudentDTO student;
 
 }
