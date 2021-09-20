@@ -50,8 +50,8 @@ public class Student extends AbstractEntity{
 	@Column(name = "gender", nullable = false)
 	private Gender gender;
 	
-	@EqualsAndHashCode.Exclude
-	@ToString.Exclude
+//	@EqualsAndHashCode.Exclude
+//	@ToString.Exclude
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "student_contact_info_id")
 	private StudentContactInfo studentContactInfo;
