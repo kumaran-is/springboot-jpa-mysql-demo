@@ -1,12 +1,17 @@
 package com.college.demo.dto;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 import com.college.demo.audit.AuditableDTO;
+import com.college.demo.model.Faculty;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -32,4 +37,7 @@ public class CourseDTO extends AuditableDTO<String> implements Serializable {
 	@NotBlank(message = "Course duration is required")
 	@Positive(message = "Course duration should be positive integer")
 	private Integer duration;
+	
+	@ApiModelProperty(value = "Set of faculties assigned to a course")
+	private Set<Faculty> Faculties = new HashSet<>();
 }

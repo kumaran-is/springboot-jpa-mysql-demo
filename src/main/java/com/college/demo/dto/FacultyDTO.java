@@ -1,6 +1,8 @@
 package com.college.demo.dto;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.validation.constraints.Email;
@@ -9,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.college.demo.audit.AuditableDTO;
+import com.college.demo.model.Course;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -41,5 +44,9 @@ public class FacultyDTO extends AuditableDTO<String> implements Serializable {
 	@NotBlank(message = "Faculty's email is required")
 	@Email(message = "Faculty's email should be a valid email format")
 	private String email;
+	
+	@ApiModelProperty(value = "Set of courses assigned to a faculty")
+	private Set<Course> Courses = new HashSet<>();
+	
 
 }

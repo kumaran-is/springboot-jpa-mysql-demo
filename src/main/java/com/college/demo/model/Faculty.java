@@ -1,7 +1,15 @@
 package com.college.demo.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,5 +30,8 @@ public class Faculty extends AbstractEntity{
 
 	@Column(name = "email", nullable = false, unique = true)
 	private String email;
+	
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "Faculties")
+	private Set<Course> Courses = new HashSet<>();
 
 }
