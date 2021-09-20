@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.college.demo.constants.Gender;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -50,8 +51,9 @@ public class Student extends AbstractEntity{
 	@Column(name = "gender", nullable = false)
 	private Gender gender;
 	
-//	@EqualsAndHashCode.Exclude
-//	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
+	@JsonIgnoreProperties("student")
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "student_contact_info_id")
 	private StudentContactInfo studentContactInfo;
