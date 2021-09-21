@@ -1,5 +1,6 @@
 package com.college.demo.audit;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
@@ -14,8 +15,10 @@ import lombok.Data;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @Data
-public class Auditable<U> {
+public class Auditable<U> implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	// updatable flag helps to avoid the override of column's value during the update operation
 	@Column(name = "created_by",updatable = false, nullable = false)
 	@CreatedBy

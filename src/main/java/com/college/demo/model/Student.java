@@ -33,7 +33,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper=false, exclude={"studentContactInfo", "enrollments"})
 @ToString(exclude = {"studentContactInfo", "enrollments"})
-public class Student extends AbstractEntity{
+public class Student extends AbstractEntity {
 
 	@Column(name = "first_name", nullable = false)
 	private String firstName;

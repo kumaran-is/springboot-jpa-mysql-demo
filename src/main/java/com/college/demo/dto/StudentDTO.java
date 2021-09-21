@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -12,19 +11,13 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import com.college.demo.audit.AuditableDTO;
 import com.college.demo.constants.Gender;
-import com.college.demo.model.Enrollment;
-import com.college.demo.model.Student;
-import com.college.demo.model.StudentContactInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 @Data
@@ -33,9 +26,9 @@ import lombok.ToString;
 @ApiModel(description = "Student DTO")
 @EqualsAndHashCode(exclude = {"studentContactInfo", "enrollments"})
 @ToString(exclude = {"studentContactInfo", "enrollments"})
-public class StudentDTO extends AuditableDTO<String> {
+public class StudentDTO extends AuditableDTO<String> implements Serializable{
 
-//	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
 	@ApiModelProperty(value = "First name of the student", name = "firstName", required = true, example = "James")
 	@NotNull(message = "Student's first name cannot be null")

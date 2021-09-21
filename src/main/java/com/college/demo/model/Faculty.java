@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Faculty extends AbstractEntity{
+public class Faculty extends AbstractEntity {
 
 	@Column(name = "first_name", nullable = false)
 	private String firstName;

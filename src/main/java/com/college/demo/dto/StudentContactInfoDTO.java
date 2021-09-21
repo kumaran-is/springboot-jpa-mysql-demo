@@ -4,18 +4,11 @@ import java.io.Serializable;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import com.college.demo.audit.AuditableDTO;
-import com.college.demo.model.StudentContactInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 @Data
 @AllArgsConstructor
@@ -23,9 +16,9 @@ import lombok.ToString;
 @ApiModel(description = "StudentContactInfo DTO")
 //@EqualsAndHashCode(exclude = {"student"})
 //@ToString(exclude = {"student"})
-public class StudentContactInfoDTO extends AuditableDTO<String> {
+public class StudentContactInfoDTO extends AuditableDTO<String> implements Serializable{
 
-	// private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	
 	@ApiModelProperty(value = "Phone number of the student", name = "phone", required = true, example = "407-724-3091")
 	@NotNull(message = "Phone cannot be null")
