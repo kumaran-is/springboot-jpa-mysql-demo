@@ -34,12 +34,14 @@ public class StudentDTO extends AuditableDTO<String> implements Serializable{
 	@NotNull(message = "Student's first name cannot be null")
 	@NotBlank(message = "Student's first name is required")
 	@Size(min = 2, message = "Student's first name should have at least 2 characters")
+	@Size(max = 20, message = "Student's first name should not be greater than 20 characters")
 	private String firstName;
 
 	@ApiModelProperty(value = "Last name of the student", name = "lastName", required = true, example = "Bond")
 	@NotNull(message = "Student's fast name cannot be null")
 	@NotBlank(message = "Student's fast name is required")
-	@Size(min = 2, message = "Student's fast name should have at least 2 characters")
+	@Size(min = 2, message = "Student's first name should have at least 2 characters")
+	@Size(max = 20, message = "Student's last name should not be greater than 20 characters")
 	private String lastName;
 
 	@ApiModelProperty(value = "Email id of the student", name = "email", required = true, example = "james@gmail.com")

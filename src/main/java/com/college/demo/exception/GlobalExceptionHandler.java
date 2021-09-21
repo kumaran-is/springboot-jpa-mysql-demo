@@ -3,6 +3,7 @@ package com.college.demo.exception;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -61,6 +62,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		ErrorDetails errorDetails = new ErrorDetails(HttpStatus.BAD_REQUEST, "Validation Error",
 				request.getDescription(false), ex);
 		errorDetails.addValidationErrors(ex.getBindingResult().getFieldErrors());
+		log.error(ex.getMessage());
+		return new ResponseEntity<Object>(errorDetails, HttpStatus.BAD_REQUEST); 
+	}
+	
+	@Override
+	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+		ErrorDetails errorDetails = new ErrorDetails(HttpStatus.BAD_REQUEST, ex.getMessage(),
+				request.getDescription(false), ex);
 		log.error(ex.getMessage());
 		return new ResponseEntity<Object>(errorDetails, HttpStatus.BAD_REQUEST); 
 	}
