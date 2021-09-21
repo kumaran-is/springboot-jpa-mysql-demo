@@ -19,8 +19,10 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import com.college.demo.model.AbstractEntity;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "course")
@@ -29,6 +31,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper=false, exclude={"faculties"})
 @ToString(exclude = {"faculties"})
+@JsonIdentityInfo(
+   generator = ObjectIdGenerators.PropertyGenerator.class,
+   property = "id"
+)
 public class Course extends AbstractEntity {
 	
 	@Column(name = "course_name", nullable = false)
