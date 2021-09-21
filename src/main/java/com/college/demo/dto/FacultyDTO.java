@@ -40,8 +40,8 @@ public class FacultyDTO extends AuditableDTO<String> implements Serializable {
 	@Email(message = "Faculty's email should be a valid email format")
 	private String email;
 	
-	@ApiModelProperty(value = "Set of courses assigned to a faculty")
-	private Set<CourseDTO> Courses = new HashSet<CourseDTO>();
+	/*@ApiModelProperty(value = "Set of courses assigned to a faculty")
+	private Set<CourseDTO> Courses = new HashSet<CourseDTO>(); */
 	
 
 }

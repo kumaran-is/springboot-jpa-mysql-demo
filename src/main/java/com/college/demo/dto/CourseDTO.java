@@ -31,14 +31,13 @@ public class CourseDTO extends AuditableDTO<String> implements Serializable {
 	
 	@ApiModelProperty(value = "Course duration in hours", name = "duration", required = true, example = "4")
 	@NotNull(message = "Course duration cannot be null")
-	@NotBlank(message = "Course duration is required")
 	@Positive(message = "Course duration should be positive integer")
 	private Integer duration;
 	
-	@ApiModelProperty(value = "Set of faculties assigned to a course")
+	/*@ApiModelProperty(value = "Set of faculties assigned to a course")
 	private Set<FacultyDTO> Faculties = new HashSet<FacultyDTO>();
 	
 	@ApiModelProperty(value = "Set of enrollments for a course")
-	private Set<EnrollmentDTO>  enrollments = new HashSet<EnrollmentDTO>();
+	private Set<EnrollmentDTO>  enrollments = new HashSet<EnrollmentDTO>(); */
 	
 }

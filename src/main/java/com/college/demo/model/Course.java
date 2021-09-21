@@ -29,7 +29,7 @@ public class Course extends AbstractEntity {
 	@Column(name = "duration", nullable = false)
 	private Integer duration;
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+/*	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "course_faculty",
 		joinColumns = { @JoinColumn(name = "course_id")},
 		inverseJoinColumns = { @JoinColumn (name = "faculty_id")})
@@ -37,5 +37,5 @@ public class Course extends AbstractEntity {
 	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "course_id")
-	private Set<Enrollment>  enrollments = new HashSet<Enrollment>();
+	private Set<Enrollment>  enrollments = new HashSet<Enrollment>(); */
 }

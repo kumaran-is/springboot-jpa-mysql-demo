@@ -51,8 +51,7 @@ public class StudentController {
 
 	@GetMapping
 	@ApiOperation("Returns all the Students")
-	// public ResponseEntity<List<StudentDTO>> findAllStudents() {
-	public ResponseEntity<?> findAllStudents() {
+	public ResponseEntity<List<StudentDTO>> findAllStudents() {
 		// return 200, with JSON body
 		return ResponseEntity.ok().body(studentMapper.toStudentDTOs(studentService.getAllStudents()));
 	}
@@ -60,9 +59,7 @@ public class StudentController {
 	@PostMapping
 	@ApiOperation("Add a new student")
 	public ResponseEntity<StudentDTO> addNewStudent(@Valid @RequestBody StudentDTO studentDTO) throws URISyntaxException {
-		
-		log.debug("addNewStudent request studentDTO ....." + studentDTO);
-		log.debug("addNewStudent studentMapper.toStudent(studentDTO)>>>>>>> " + studentMapper.toStudent(studentDTO));
+
 		Student savedStudent = studentService.addNewStudent(studentMapper.toStudent(studentDTO));
 		return ResponseEntity.status(HttpStatus.CREATED).body(studentMapper.toStudentDTO(savedStudent));
 		// return ResponseEntity.created(new URI("/api/v1/student/" +

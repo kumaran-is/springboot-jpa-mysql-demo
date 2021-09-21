@@ -28,7 +28,7 @@ public class Faculty extends AbstractEntity {
 	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "Faculties")
-	private Set<Course> Courses = new HashSet<Course>();
+	/*@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "Faculties")
+	private Set<Course> Courses = new HashSet<Course>(); */
 
 }
