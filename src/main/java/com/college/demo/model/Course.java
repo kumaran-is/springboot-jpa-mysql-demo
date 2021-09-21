@@ -2,7 +2,7 @@ package com.college.demo.model;
 
 import java.util.HashSet;
 import java.util.Set;
-
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,7 +42,8 @@ public class Course extends AbstractEntity {
 	@JoinTable(name = "course_faculty",
 		joinColumns = { @JoinColumn(name = "course_id")},
 		inverseJoinColumns = { @JoinColumn (name = "faculty_id")})
-	private Set<Faculty> faculties = new HashSet<Faculty>();
+	 private List<Faculty>  faculties;
+	//private Set<Faculty> faculties = new HashSet<Faculty>();
 	
 	/*@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "course_id")

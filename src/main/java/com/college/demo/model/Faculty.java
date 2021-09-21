@@ -1,6 +1,7 @@
 package com.college.demo.model;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -37,6 +38,7 @@ public class Faculty extends AbstractEntity {
 	
 	@JsonIgnoreProperties(value = {"faculty", "hibernateLazyInitializer"})
 	@ManyToMany(targetEntity = Course.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "faculties")
-	private Set<Course> courses = new HashSet<>();
+	private List<Course> courses;
+	// private Set<Course> courses = new HashSet<>();
 
 }
