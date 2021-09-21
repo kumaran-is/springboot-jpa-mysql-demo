@@ -6,8 +6,6 @@ import java.util.Optional;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.college.demo.controller.StudentController;
 import com.college.demo.exception.ResourceAlreadyExistsException;
 import com.college.demo.exception.ResourceNotFoundException;
 import com.college.demo.model.Student;
@@ -24,18 +22,18 @@ public class StudentServiceImpl implements StudentService {
 	private StudentRepository studentRepository;
 
 	@Override
+	@Transactional(readOnly = true)
+	public List<Student> getAllStudents() {
+
+		return studentRepository.findAll();
+	}
+	
+	@Override
 	public Student findStudentByEmail(String email) {
 
 		return studentRepository.findStudentByEmail(email).orElseThrow(
 				() -> new ResourceNotFoundException("700", "Student with email " + email + " does not exists"));
 
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public List<Student> getAllStudents() {
-
-		return studentRepository.findAll();
 	}
 
 	@Override
