@@ -1,20 +1,21 @@
 package com.college.demo.audit;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel(description = "Auditable DTO")
-public class AuditableDTO<U> implements Serializable  {
+public class AuditableDTO<U> {
 
-		private static final long serialVersionUID = 1L;
+		// private static final long serialVersionUID = 1L;
 		
 		@ApiModelProperty(value = "Audit field generated automatically by JPA layer that refers to an user who created the record", name = "createdBy")
 		protected U createdBy;

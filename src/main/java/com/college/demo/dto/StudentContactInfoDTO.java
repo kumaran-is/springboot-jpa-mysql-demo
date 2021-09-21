@@ -23,9 +23,9 @@ import lombok.ToString;
 @ApiModel(description = "StudentContactInfo DTO")
 @EqualsAndHashCode(exclude = {"student"})
 @ToString(exclude = {"student"})
-public class StudentContactInfoDTO extends AuditableDTO<String> implements Serializable {
+public class StudentContactInfoDTO extends AuditableDTO<String> {
 
-	private static final long serialVersionUID = 1L;
+	// private static final long serialVersionUID = 1L;
 	
 	@ApiModelProperty(value = "Phone number of the student", name = "phone", required = true, example = "407-724-3091")
 	@NotNull(message = "Phone cannot be null")

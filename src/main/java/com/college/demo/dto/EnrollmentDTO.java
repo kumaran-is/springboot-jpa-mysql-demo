@@ -11,16 +11,21 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import com.college.demo.constants.Status;
+import lombok.Setter;
 
-@Data
+import com.college.demo.constants.Status;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel(description = "Enrollment DTO")
-public class EnrollmentDTO extends AuditableDTO<String> implements Serializable {
+public class EnrollmentDTO extends AuditableDTO<String> {
 
-	private static final long serialVersionUID = 1L;
+	// private static final long serialVersionUID = 1L;
 	
 	@ApiModelProperty(value = "Course start date in YYYY-MM-DD format", name = "startDate", required = true, example = "2000-01-25")
 	@NotNull(message = "Course start date cannot be null")
