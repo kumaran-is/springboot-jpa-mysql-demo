@@ -33,6 +33,6 @@ public class StudentContactInfo extends AbstractEntity {
 	
 
 	/*@JsonIgnoreProperties(value = {"studentContactInfo", "hibernateLazyInitializer"})
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "studentContactInfo")
+	@OneToOne(targetEntity = StudentContactInfo.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "studentContactInfo")
 	private Student student;  */
 }
