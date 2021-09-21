@@ -20,8 +20,8 @@ import lombok.ToString;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = {"student"})
-@ToString(exclude = {"student"})
+//@EqualsAndHashCode(exclude = {"student"})
+// @ToString(exclude = {"student"})
 public class StudentContactInfo extends AbstractEntity {
 
 	@Column(name = "phone", nullable = false)
@@ -40,7 +40,7 @@ public class StudentContactInfo extends AbstractEntity {
     private String zipcode;
 	
 
-	@JsonIgnoreProperties(value = {"studentContactInfo", "hibernateLazyInitializer"})
+	/*@JsonIgnoreProperties(value = {"studentContactInfo", "hibernateLazyInitializer"})
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "studentContactInfo")
-	private Student student;
+	private Student student;  */
 }

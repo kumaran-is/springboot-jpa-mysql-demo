@@ -21,8 +21,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel(description = "StudentContactInfo DTO")
-@EqualsAndHashCode(exclude = {"student"})
-@ToString(exclude = {"student"})
+//@EqualsAndHashCode(exclude = {"student"})
+//@ToString(exclude = {"student"})
 public class StudentContactInfoDTO extends AuditableDTO<String> {
 
 	// private static final long serialVersionUID = 1L;
@@ -52,10 +52,10 @@ public class StudentContactInfoDTO extends AuditableDTO<String> {
 	@NotBlank(message = "Zipcode is required")
     private String zipcode;
 	
-	@ApiModelProperty(value = "Student's basic detail", name = "studentDTO", required = true)
+	/*@ApiModelProperty(value = "Student's basic detail", name = "studentDTO", required = true)
 	@NotNull(message = "Student cannot be null")
 	@NotBlank(message = "Student is required")
 	@JsonIgnoreProperties(value = {"studentContactInfo", "hibernateLazyInitializer"})
-	private StudentDTO student;
+	private StudentDTO student; */
 
 }

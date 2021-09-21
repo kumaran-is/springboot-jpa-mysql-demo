@@ -54,13 +54,7 @@ public class StudentController {
 	// public ResponseEntity<List<StudentDTO>> findAllStudents() {
 	public ResponseEntity<?> findAllStudents() {
 		// return 200, with JSON body
-		
-		// studentMapper.toStudentDTOs(studentService.getAllStudents());
-		List<Student> student= studentService.getAllStudents();
-		log.debug("student >>>>>>>>>>>>>>>>>>>>>>>>>>>$$$....." + student);
-	  //   List<StudentDTO> studentDTO =  studentMapper.toStudentDTOs(student);
-	  //  log.debug("studentDTO >>>>>>>>>>>>>>>>>>>>>>>>>>>@@@@@@....." + studentDTO);
-		return ResponseEntity.ok().body(student);
+		return ResponseEntity.ok().body(studentMapper.toStudentDTOs(studentService.getAllStudents()));
 	}
 
 	@PostMapping
