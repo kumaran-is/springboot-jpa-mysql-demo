@@ -76,7 +76,7 @@ public class CourseController {
 	@PutMapping("/{id}")
 	@ApiOperation("Modify course duration")
 	public ResponseEntity<CourseDTO> modifyCourseDuration(@PathVariable("id") Long id,
-			@RequestParam(name = "duration", required = true) Integer duration) {
+			@Valid @RequestParam(name = "duration", required = true) Integer duration) {
 		if (null == id || id.equals(0L)) {
 			throw new InvalidInputException("702", "Id is not valid");
 		}
