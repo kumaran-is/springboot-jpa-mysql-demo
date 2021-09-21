@@ -10,7 +10,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import com.college.demo.model.AbstractEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -19,6 +22,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper=false, exclude={"courses"})
+@ToString(exclude = {"courses"})
 public class Faculty extends AbstractEntity {
 
 	@Column(name = "first_name", nullable = false)
@@ -31,7 +36,7 @@ public class Faculty extends AbstractEntity {
 	private String email;
 	
 	@JsonIgnoreProperties(value = {"faculty", "hibernateLazyInitializer"})
-	@ManyToMany(targetEntity = Course.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "Faculties")
-	private Set<Course> Courses = new HashSet<>();
+	@ManyToMany(targetEntity = Course.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "faculties")
+	private Set<Course> courses = new HashSet<>();
 
 }

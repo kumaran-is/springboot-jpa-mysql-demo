@@ -14,7 +14,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import com.college.demo.model.AbstractEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -24,6 +27,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper=false, exclude={"faculties"})
+@ToString(exclude = {"faculties"})
 public class Course extends AbstractEntity {
 	
 	@Column(name = "course_name", nullable = false)
@@ -37,7 +42,7 @@ public class Course extends AbstractEntity {
 	@JoinTable(name = "course_faculty",
 		joinColumns = { @JoinColumn(name = "course_id")},
 		inverseJoinColumns = { @JoinColumn (name = "faculty_id")})
-	private Set<Faculty> Faculties = new HashSet<Faculty>();
+	private Set<Faculty> faculties = new HashSet<Faculty>();
 	
 	/*@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "course_id")
