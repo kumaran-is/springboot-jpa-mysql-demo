@@ -39,10 +39,10 @@ public class CourseDTO extends AuditableDTO<String> implements Serializable {
     @Max(value = 50, message = "Course duration should not be greater than 50 hours")
 	private Integer duration;
 	
-	/*@ApiModelProperty(value = "Set of faculties assigned to a course")
-	private Set<FacultyDTO> Faculties = new HashSet<FacultyDTO>();
+	@ApiModelProperty(value = "Set of faculties assigned to a course")
+	private Set<FacultyDTO> Faculties = new HashSet<>();
 	
-	@ApiModelProperty(value = "Set of enrollments for a course")
+	/* @ApiModelProperty(value = "Set of enrollments for a course")
 	private Set<EnrollmentDTO>  enrollments = new HashSet<EnrollmentDTO>(); */
 	
 }

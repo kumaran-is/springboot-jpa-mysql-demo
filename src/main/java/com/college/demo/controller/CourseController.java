@@ -39,9 +39,13 @@ public class CourseController {
 	
 	@GetMapping
 	@ApiOperation("Returns all the Courses")
-	public ResponseEntity<List<CourseDTO>> findAllCourses() {
+	// public ResponseEntity<List<CourseDTO>> findAllCourses() {
+	public ResponseEntity<?> findAllCourses() {
 		// return 200, with JSON body
-		return ResponseEntity.ok().body(courseMapper.toCourseDTOs(courseService.getAllCourses()));
+		List<Course> courses = courseService.getAllCourses();
+		log.debug("courses >>>>>>>>>>>>>>> " + courses);
+		// return ResponseEntity.ok().body(courseMapper.toCourseDTOs(courseService.getAllCourses()));
+		return ResponseEntity.ok().body(courses);
 	}
 	
 	@GetMapping("/{name}")

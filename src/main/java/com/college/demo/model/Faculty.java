@@ -11,6 +11,8 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.college.demo.model.AbstractEntity;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "faculty")
@@ -28,7 +30,8 @@ public class Faculty extends AbstractEntity {
 	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 	
-	/*@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "Faculties")
-	private Set<Course> Courses = new HashSet<Course>(); */
+	@JsonIgnoreProperties(value = {"faculty", "hibernateLazyInitializer"})
+	@ManyToMany(targetEntity = Course.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "Faculties")
+	private Set<Course> Courses = new HashSet<>();
 
 }

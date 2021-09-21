@@ -15,6 +15,9 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.college.demo.model.AbstractEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "course")
@@ -29,13 +32,14 @@ public class Course extends AbstractEntity {
 	@Column(name = "duration", nullable = false)
 	private Integer duration;
 	
-/*	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnoreProperties(value = {"course", "hibernateLazyInitializer"})
+	@ManyToMany(targetEntity = Faculty.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "course_faculty",
 		joinColumns = { @JoinColumn(name = "course_id")},
 		inverseJoinColumns = { @JoinColumn (name = "faculty_id")})
 	private Set<Faculty> Faculties = new HashSet<Faculty>();
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	/*@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "course_id")
-	private Set<Enrollment>  enrollments = new HashSet<Enrollment>(); */
+	private Set<Enrollment>  enrollments = new HashSet<Enrollment>();  */
 }
