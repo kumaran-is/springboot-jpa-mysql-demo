@@ -43,7 +43,7 @@ public class Course extends AbstractEntity {
 	@Column(name = "duration", nullable = false)
 	private Integer duration;
 	
-	@JsonIgnoreProperties(value = {"course", "hibernateLazyInitializer"})
+	//@JsonIgnoreProperties(value = {"course", "hibernateLazyInitializer"})
 	@ManyToMany(targetEntity = Faculty.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "course_faculty",
 		joinColumns = { @JoinColumn(name = "course_id", referencedColumnName="id")},

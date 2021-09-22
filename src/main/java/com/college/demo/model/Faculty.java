@@ -42,7 +42,7 @@ public class Faculty extends AbstractEntity {
 	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 	
-	@JsonIgnoreProperties(value = {"faculty", "hibernateLazyInitializer"})
+	// @JsonIgnoreProperties(value = {"faculty", "hibernateLazyInitializer"})
 	@ManyToMany(targetEntity = Course.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "faculties")
 	private List<Course> courses;
 	// private Set<Course> courses = new HashSet<>();
