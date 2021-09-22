@@ -8,14 +8,18 @@ import com.college.demo.model.Enrollment;
 public interface EnrollmentService {
 
 	public List<Enrollment> getAllEnrollments();
+	
+	public Enrollment findEnrollmentById(Long id);
 
 	public List<Enrollment> findEnrollmentByStudent(Long studentId);
 	
-	public List<Enrollment> findEnrollmentByCourse(Long CourseId);
+	public List<Enrollment> findEnrollmentByCourse(Long courseId);
 
 	public Enrollment enrollStudent(Enrollment enrollment);
 
 	public void deleteEnrollmentByStudent(Long studentId);
+	
+	public void deleteEnrollmentById(Long enrollmentId);
 
 	public Enrollment updateEnrollment(Long enrollmentId, String status, LocalDate endDate, Float score );
 }
