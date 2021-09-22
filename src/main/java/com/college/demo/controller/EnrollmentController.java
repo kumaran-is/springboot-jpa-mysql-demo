@@ -136,9 +136,6 @@ public class EnrollmentController {
 	@DeleteMapping("/status/{status}")
 	@ApiOperation("Delete one or more enrollments by a Status")
 	public ResponseEntity<Void> deleteEnrollmentByStatus(@PathVariable("status") String status) {
-		if (status != null) {
-			throw new InvalidInputException("702", "Status is not valid");
-		}
 		enrollmentService.deleteEnrollmentByStatus(status);
 		return ResponseEntity.noContent().build();
 	}
