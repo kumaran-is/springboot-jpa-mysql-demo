@@ -11,9 +11,7 @@ import com.college.demo.exception.ResourceNotFoundException;
 import com.college.demo.model.Course;
 import com.college.demo.repository.CourseRepository;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
 @Transactional
 public class CourseServiceImpl implements CourseService {
@@ -29,6 +27,7 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Course findCourseById(Long id) {
 		return courseRepository.findById(id).orElseThrow(
 				() -> new ResourceNotFoundException("700", "Course with id " + id + " does not exists"));
@@ -36,6 +35,7 @@ public class CourseServiceImpl implements CourseService {
 	}
 	
 	@Override
+	@Transactional(readOnly = true)
 	public Course findCourseByCourseName(String courseName) {
 		return courseRepository.findCourseByCourseName(courseName).orElseThrow(
 				() -> new ResourceNotFoundException("700", "Course name " + courseName + " does not exists"));
@@ -44,8 +44,7 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public Course addNewCourse(Course course) {
-		log.debug("addNewCourse service course ....." + course);
-
+	
 		Optional<Course> CourseOptional = courseRepository.findCourseByCourseName(course.getCourseName());
 
 		if (CourseOptional.isPresent()) {
