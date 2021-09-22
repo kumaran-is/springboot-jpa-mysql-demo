@@ -68,6 +68,6 @@ public class StudentDTO extends AuditableDTO<String> implements Serializable{
 	
 	@ApiModelProperty(value = "Set of enrollments(courses) enrolled by a student")
 	@JsonIgnoreProperties
-	private Set<EnrollmentDTO> enrollments = new HashSet<EnrollmentDTO>();
+	private Set<EnrollmentDTO> enrollments = new HashSet<>();
 
 }

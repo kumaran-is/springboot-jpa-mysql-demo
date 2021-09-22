@@ -29,8 +29,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper=false, exclude={"faculties"})
-@ToString(exclude = {"faculties"})
+@EqualsAndHashCode(callSuper=false, exclude={"faculties", "enrollments"})
+@ToString(exclude = {"faculties", "enrollments"})
 @JsonIdentityInfo(
    generator = ObjectIdGenerators.PropertyGenerator.class,
    property = "id"
@@ -51,7 +51,6 @@ public class Course extends AbstractEntity {
 	// private List<Faculty>  faculties;
 	private Set<Faculty> faculties = new HashSet<Faculty>();
 	
-	/*@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "course_id")
-	private Set<Enrollment>  enrollments = new HashSet<Enrollment>();  */
+	@OneToMany(targetEntity = Enrollment.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "course")
+	private Set<Enrollment>  enrollments = new HashSet<>(); 
 }

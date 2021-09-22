@@ -42,7 +42,7 @@ public class CourseDTO extends AuditableDTO<String> implements Serializable {
 	@ApiModelProperty(value = "Set of faculties assigned to a course")
 	private Set<FacultyDTO> Faculties = new HashSet<>();
 	
-	/* @ApiModelProperty(value = "Set of enrollments for a course")
-	private Set<EnrollmentDTO>  enrollments = new HashSet<EnrollmentDTO>(); */
+	@ApiModelProperty(value = "Set of enrollments for a course")
+	private Set<EnrollmentDTO>  enrollments = new HashSet<>();
 	
 }

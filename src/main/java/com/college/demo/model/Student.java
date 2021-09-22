@@ -57,9 +57,8 @@ public class Student extends AbstractEntity {
 	@JoinColumn(name = "student_contact_info_id")
 	private StudentContactInfo studentContactInfo;
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "student_id")
-	private Set<Enrollment>  enrollments = new HashSet<Enrollment>();
+	@OneToMany(targetEntity = Enrollment.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "student")
+	private Set<Enrollment>  enrollments = new HashSet<>();
 
 	@Transient
 	private Integer age;

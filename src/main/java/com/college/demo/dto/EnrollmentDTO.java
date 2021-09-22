@@ -14,6 +14,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import com.college.demo.constants.Status;
+import com.college.demo.model.Student;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 @Setter
@@ -45,5 +47,13 @@ public class EnrollmentDTO extends AuditableDTO<String> implements Serializable{
 	@NotNull(message = "Student course status cannot be null")
 	@NotBlank(message = "Student course status is required")
 	private Status status;
+	
+	@ApiModelProperty(value = "Enrollment's student information", name = "studentDTO")
+	@JsonIgnoreProperties(value = {"studentDTO", "hibernateLazyInitializer"})
+	StudentDTO student;
+	
+	@ApiModelProperty(value = "Enrollment's course information", name = "courseDTO")
+	@JsonIgnoreProperties(value = {"courseDTO", "hibernateLazyInitializer"})
+	CourseDTO course;
 
 }
