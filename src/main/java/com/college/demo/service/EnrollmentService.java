@@ -20,10 +20,14 @@ public interface EnrollmentService {
 	public Enrollment findEnrollmentByStudentandCourse(Long studentId, Long courseId);
 
 	public Enrollment enrollStudent(Enrollment enrollment);
+	
+	public void deleteEnrollmentById(Long enrollmentId);
 
 	public void deleteEnrollmentByStudent(Long studentId);
 	
-	public void deleteEnrollmentById(Long enrollmentId);
+	public void deleteEnrollmentByCourse(Long courseId);
+	
+	public void deleteEnrollmentByStatus(String status);
 	
 	public void deleteEnrollmentByStudentAndCourse(Long studentId, Long courseId);
 

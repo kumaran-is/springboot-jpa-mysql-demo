@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -47,8 +48,8 @@ public class EnrollmentController {
 		return ResponseEntity.ok().body(enrollments);
 	}
 	
-	@GetMapping("/{id}")
-	@ApiOperation("Returns an enrollment by an enrollment Id")
+	@GetMapping("/id/{id}")
+	@ApiOperation("Returns an enrollment for an enrollment Id")
 	public ResponseEntity<Enrollment> findEnrollmentByEnrollmentId(@Valid @PathVariable("id") Long id) {
 		// return 200, with JSON body
 		Enrollment enrollment = enrollmentService.findEnrollmentById(id);
@@ -56,8 +57,8 @@ public class EnrollmentController {
 		return ResponseEntity.ok().body(enrollment);
 	}
 	
-	@GetMapping("/{studentId}")
-	@ApiOperation("Returns all the enrollments by a student")
+	@GetMapping("/student/{studentId}")
+	@ApiOperation("Returns all the enrollments for a student")
 	public ResponseEntity<List<Enrollment>> findEnrollmentByStudent(@Valid @PathVariable("studentId") Long studentId) {
 		// return 200, with JSON body
 		List<Enrollment> enrollments = enrollmentService.findEnrollmentByStudent(studentId);
@@ -66,8 +67,8 @@ public class EnrollmentController {
 	}
 	
 	
-	@GetMapping("/{courseId}")
-	@ApiOperation("Returns all the enrollments by a course")
+	@GetMapping("/course/{courseId}")
+	@ApiOperation("Returns all the enrollments for a course")
 	public ResponseEntity<List<Enrollment>> findEnrollmentByCourse(@Valid @PathVariable("courseId") Long courseId) {
 		// return 200, with JSON body
 		List<Enrollment> enrollments = enrollmentService.findEnrollmentByCourse(courseId);
@@ -75,7 +76,7 @@ public class EnrollmentController {
 		return ResponseEntity.ok().body(enrollments);
 	}
 	
-	@GetMapping("/{status}")
+	@GetMapping("/status/{status}")
 	@ApiOperation("Returns all the enrollments by a status")
 	public ResponseEntity<List<Enrollment>> findEnrollmentByStatus(@Valid @PathVariable("status") String status) {
 		// return 200, with JSON body
@@ -84,7 +85,7 @@ public class EnrollmentController {
 		return ResponseEntity.ok().body(enrollments);
 	}
 	
-	@GetMapping("/{studentId}/{courseId}")
+	@GetMapping("/student/{studentId}/course/{courseId}")
 	@ApiOperation("Returns an enrollment by a student and a course")
 	public ResponseEntity<Enrollment> findEnrollmentByStudentandCourse(@Valid @PathVariable("studentId") Long studentId, @Valid @PathVariable("courseId") Long courseId) {
 		// return 200, with JSON body
@@ -96,16 +97,13 @@ public class EnrollmentController {
 	@PostMapping
 	@ApiOperation("Enroll a student to a course")
 	public ResponseEntity<EnrollmentDTO> enrollAStudent(@Valid @RequestBody EnrollmentDTO enrollmentDTO) throws URISyntaxException {
-		log.debug("Controller>>>>>>>>>>>enrollAStudent>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + enrollmentDTO);
-		
-		log.debug("Controller>>>>>>>>>>>enrollmentMapper.toEnrollment(enrollmentDTO)>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + enrollmentMapper.toEnrollment(enrollmentDTO));
 		Enrollment savedEnrollment = enrollmentService.enrollStudent(enrollmentMapper.toEnrollment(enrollmentDTO));
 		return ResponseEntity.status(HttpStatus.CREATED).body(enrollmentMapper.toEnrollmentDTO(savedEnrollment));
 		// return ResponseEntity.created(new URI("/api/v1/enrollment/" +
 		// savedEnrollment.getId())).body(enrollmentMapper.toEnrollmentDTO(savedEnrollment));
 	}
 
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/id/{id}")
 	@ApiOperation("Delete an Enrollment by an enrollment Id")
 	public ResponseEntity<Void> deleteEnrollmentById(@PathVariable("id") Long id) {
 		if (null == id || id.equals(0L)) {
@@ -115,8 +113,8 @@ public class EnrollmentController {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@DeleteMapping("/{studentId}")
-	@ApiOperation("Delete one or more enrollments for a student")
+	@DeleteMapping("/student/{studentId}")
+	@ApiOperation("Delete one or more enrollments by a student Id")
 	public ResponseEntity<Void> deleteEnrollmentByStudent(@PathVariable("studentId") Long studentId) {
 		if (null == studentId || studentId.equals(0L)) {
 			throw new InvalidInputException("702", "Student Id is not valid");
@@ -125,7 +123,28 @@ public class EnrollmentController {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@DeleteMapping("/{studentId}/{courseId}")
+	@DeleteMapping("/course/{courseId}")
+	@ApiOperation("Delete one or more enrollments by a Course Id")
+	public ResponseEntity<Void> deleteEnrollmentByCourse(@PathVariable("courseId") Long courseId) {
+		if (null == courseId || courseId.equals(0L)) {
+			throw new InvalidInputException("702", "Student Id is not valid");
+		}
+		enrollmentService.deleteEnrollmentByCourse(courseId);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@DeleteMapping("/status/{status}")
+	@ApiOperation("Delete one or more enrollments by a Status")
+	public ResponseEntity<Void> deleteEnrollmentByStatus(@PathVariable("status") String status) {
+		if (status != null) {
+			throw new InvalidInputException("702", "Status is not valid");
+		}
+		enrollmentService.deleteEnrollmentByStatus(status);
+		return ResponseEntity.noContent().build();
+	}
+	
+	
+	@DeleteMapping("/student/{studentId}/course/{courseId}")
 	@ApiOperation("Delete an enrollment by student and course")
 	public ResponseEntity<Void> deleteEnrollmentByStudentandCourse(@PathVariable("studentId") Long studentId, @PathVariable("courseId") Long courseId) {
 		if (null == studentId || studentId.equals(0L)) {
@@ -142,7 +161,7 @@ public class EnrollmentController {
 	@ApiOperation("Update Enrollment ")
 	public ResponseEntity<Enrollment> updateEnrollment(@PathVariable("id") Long id,
 			@RequestParam(name = "status", required = false) String status,
-			@RequestParam(name = "endDate", required = false) LocalDate endDate,
+			@RequestParam(name = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
 			@RequestParam(name = "score", required = false) Float score) {
 		if (null == id || id.equals(0L)) {
 			throw new InvalidInputException("702", "Id is not valid");

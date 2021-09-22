@@ -2,14 +2,11 @@ package com.college.demo.service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.college.demo.controller.EnrollmentController;
+import com.college.demo.constants.Status;
 import com.college.demo.exception.ResourceAlreadyExistsException;
 import com.college.demo.exception.ResourceNotFoundException;
 import com.college.demo.model.Enrollment;
@@ -56,8 +53,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Enrollment> findEnrollmentByStatus(String status) {
-		//return enrollmentRepository.findByStatus(status);
-		return null;
+		return enrollmentRepository.findByStatus(Status.valueOf(status));
 	}
 	
 	@Override
@@ -102,7 +98,29 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 			throw new ResourceNotFoundException("700", "Enrollment with student id " + studentId + " does not exists");
 		}
 
-		// enrollmentRepository.deleteByStudent(studentId); 
+		enrollmentRepository.deleteByStudent(studentId); 
+
+	}
+	
+	@Override
+	public void deleteEnrollmentByCourse(Long courseId) {
+		boolean exists = enrollmentRepository.existsByCourse(courseId);
+		if (!exists) {
+			throw new ResourceNotFoundException("700", "Enrollment with course id " + courseId + " does not exists");
+		}
+
+		enrollmentRepository.deleteByCourse(courseId); 
+
+	}
+	
+	@Override
+	public void deleteEnrollmentByStatus(String status) {
+		boolean exists = enrollmentRepository.existsByStatus(Status.valueOf(status));
+		if (!exists) {
+			throw new ResourceNotFoundException("700", "Enrollment with status " + status + " does not exists");
+		}
+
+		enrollmentRepository.deleteByStatus(Status.valueOf(status)); 
 
 	}
 	
@@ -113,7 +131,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 			throw new ResourceNotFoundException("700", "Enrollment with student id " + studentId + " and course id "+courseId+" does not exists");
 		}
 
-	//	enrollmentRepository.deleteByStudentandCourse(studentId, courseId); 
+	   enrollmentRepository.deleteByStudentandCourse(studentId, courseId); 
 
 	}
 	
@@ -123,8 +141,8 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 		Enrollment enrollment = enrollmentRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("700", "Enrollment with id " + id + " does not exists"));
 
-		if (status != null && status.length() > 0) {
-			enrollment.setStatus(null);
+		if (status != null) {
+			enrollment.setStatus(Status.valueOf(status));
 		}
 
 		if (endDate != null) {
