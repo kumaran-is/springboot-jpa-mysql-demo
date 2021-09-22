@@ -43,24 +43,23 @@ public class CourseController {
 	public ResponseEntity<?> findAllCourses() {
 		// return 200, with JSON body
 		List<Course> courses = courseService.getAllCourses();
-		log.debug("courses >>>>>>>>>>>>>>> " + courses);
 		// return ResponseEntity.ok().body(courseMapper.toCourseDTOs(courseService.getAllCourses()));
 		return ResponseEntity.ok().body(courses);
 	}
 	
 	@GetMapping("/{name}")
 	@ApiOperation("Returns a course by name")
-	public ResponseEntity<CourseDTO> findCourseByName(@Valid @PathVariable("name") String name) {
+	public ResponseEntity<Course> findCourseByName(@Valid @PathVariable("name") String name) {
 		// return 200, with JSON body
-		return ResponseEntity.ok().body(courseMapper.toCourseDTO(courseService.findCourseByCourseName(name)));
+		Course course = courseService.findCourseByCourseName(name);
+		// return ResponseEntity.ok().body(courseMapper.toCourseDTO(courseService.findCourseByCourseName(name)));
+		return ResponseEntity.ok().body(course);
 	}
 
 	@PostMapping
 	@ApiOperation("Add a new Course")
 	public ResponseEntity<CourseDTO> addNewCourse(@Valid @RequestBody CourseDTO courseDTO) throws URISyntaxException {
 		
-		log.debug("addNewCourse request courseDTO ....." + courseDTO);
-		log.debug("addNewCourse CourseMapper.toCourse(studentDTO)>>>>>>> " + courseMapper.toCourse(courseDTO));
 		Course savedCourse =courseService.addNewCourse(courseMapper.toCourse(courseDTO));
 		return ResponseEntity.status(HttpStatus.CREATED).body(courseMapper.toCourseDTO(savedCourse));
 		// return ResponseEntity.created(new URI("/api/v1/course/" +
@@ -79,13 +78,14 @@ public class CourseController {
 	
 	@PutMapping("/{id}")
 	@ApiOperation("Modify course duration")
-	public ResponseEntity<CourseDTO> modifyCourseDuration(@PathVariable("id") Long id,
+	public ResponseEntity<Course> modifyCourseDuration(@PathVariable("id") Long id,
 			@Valid @RequestParam(name = "duration", required = true) Integer duration) {
 		if (null == id || id.equals(0L)) {
 			throw new InvalidInputException("702", "Id is not valid");
 		}
-		return ResponseEntity.ok()
-				.body(courseMapper.toCourseDTO(courseService.updateCourseDuration(id, duration)));
+		Course course = courseService.updateCourseDuration(id, duration);
+		// return ResponseEntity.ok().body(courseMapper.toCourseDTO(courseService.updateCourseDuration(id, duration)));
+		return ResponseEntity.ok().body(course);
 
 	}
 
