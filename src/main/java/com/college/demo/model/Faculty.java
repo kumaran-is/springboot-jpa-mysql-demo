@@ -44,7 +44,7 @@ public class Faculty extends AbstractEntity {
 	
 	// @JsonIgnoreProperties(value = {"faculty", "hibernateLazyInitializer"})
 	@ManyToMany(targetEntity = Course.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "faculties")
-	private List<Course> courses;
-	// private Set<Course> courses = new HashSet<>();
+	// private List<Course> courses;
+	private Set<Course> courses = new HashSet<>();
 
 }
