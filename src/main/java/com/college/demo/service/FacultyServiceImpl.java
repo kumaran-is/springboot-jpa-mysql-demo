@@ -22,11 +22,13 @@ public class FacultyServiceImpl implements FacultyService {
 	private FacultyRepository facultyRepository;
 	
 	@Override
+	@Transactional(readOnly = true)
 	public List<Faculty> getAllFaculties() {
 		return facultyRepository.findAll();
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Faculty findFacultyByEmail(String email) {
 		return facultyRepository.findFacultyByEmail(email).orElseThrow(
 				() -> new ResourceNotFoundException("700", "Faculty with email " + email + " does not exists"));

@@ -8,6 +8,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.college.demo.controller.EnrollmentController;
 import com.college.demo.exception.ResourceAlreadyExistsException;
 import com.college.demo.exception.ResourceNotFoundException;
 import com.college.demo.model.Enrollment;
@@ -17,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 
 
 @Service
+@Slf4j
 @Transactional
 public class EnrollmentServiceImpl implements EnrollmentService {
 
@@ -48,30 +51,38 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 	public List<Enrollment> findEnrollmentByCourse(Long courseId) {
 		return enrollmentRepository.findEnrollmentByCourse(courseId);
 	}
+	
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<Enrollment> findEnrollmentByStatus(String status) {
+		//return enrollmentRepository.findByStatus(status);
+		return null;
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Enrollment findEnrollmentByStudentandCourse(Long studentId, Long courseId) {
+		 return enrollmentRepository.findEnrollmentByStudentAndCourse(studentId, courseId).orElseThrow(
+					() -> new ResourceNotFoundException("700", "Enrollment with student id " + studentId + " and  course id " + courseId + " does not exists"));
+	}
 
 	@Override
 	public Enrollment enrollStudent(Enrollment enrollment) {
 		
-		/*Optional<Enrollment> enrollmentOptional = enrollmentRepository.findEnrollmentByStudentAndCourse(enrollment.getStudent().getId(), enrollment.getCourse().getId());
+		log.debug("11111111111>>>>>>>>>>>enrollment>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + enrollment);
+		
+		Optional<Enrollment> enrollmentOptional = enrollmentRepository.findEnrollmentByStudentAndCourse(enrollment.getStudentId(), enrollment.getCourseId());
 
+		log.debug("22222222>>>>>>>>>>>enrollmentOptional>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + enrollmentOptional); 
 		if (enrollmentOptional.isPresent()) {
 			throw new ResourceAlreadyExistsException("701",
-					"Enrollment for student id " + enrollment.getStudent().getId() + " with course id " + enrollment.getCourse().getId() + " already exists");
-		}  */
+					"Enrollment for student id " + enrollment.getStudentId() + " with course id " + enrollment.getCourseId() + " already exists");
+		}
 
 		return enrollmentRepository.save(enrollment);	
 	}
 
-	@Override
-	public void deleteEnrollmentByStudent(Long studentId) {
-		/*boolean exists = enrollmentRepository.existsByStudent(studentId);
-		if (!exists) {
-			throw new ResourceNotFoundException("700", "Enrollment with student studentId " + id + " does not exists");
-		}
-
-		enrollmentRepository.deleteByStudentId(studentId); */
-
-	}
 	
 	@Override
 	public void deleteEnrollmentById(Long id) {
@@ -83,13 +94,36 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 		enrollmentRepository.deleteById(id);
 
 	}
+	
+	@Override
+	public void deleteEnrollmentByStudent(Long studentId) {
+		boolean exists = enrollmentRepository.existsByStudent(studentId);
+		if (!exists) {
+			throw new ResourceNotFoundException("700", "Enrollment with student id " + studentId + " does not exists");
+		}
+
+		// enrollmentRepository.deleteByStudent(studentId); 
+
+	}
+	
+	@Override
+	public void deleteEnrollmentByStudentAndCourse(Long studentId, Long courseId) {
+		boolean exists = enrollmentRepository.existsByStudentAndCourse(studentId, courseId);
+		if (!exists) {
+			throw new ResourceNotFoundException("700", "Enrollment with student id " + studentId + " and course id "+courseId+" does not exists");
+		}
+
+	//	enrollmentRepository.deleteByStudentandCourse(studentId, courseId); 
+
+	}
+	
 
 	@Override
 	public Enrollment updateEnrollment(Long id, String status, LocalDate endDate, Float score) {
 		Enrollment enrollment = enrollmentRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("700", "Enrollment with id " + id + " does not exists"));
 
-		if (status != null && status.length() > 0 && !Objects.equals(enrollment.getStatus(), status)) {
+		if (status != null && status.length() > 0) {
 			enrollment.setStatus(null);
 		}
 

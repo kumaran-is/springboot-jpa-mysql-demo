@@ -12,8 +12,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import com.college.demo.constants.Status;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -21,6 +25,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper=false)
+@JsonIdentityInfo(
+   generator = ObjectIdGenerators.PropertyGenerator.class,
+   property = "id"
+)
 public class Enrollment extends AbstractEntity {
 	
 	@Column(name = "start_date", columnDefinition = "DATE", nullable = false)
@@ -36,12 +45,18 @@ public class Enrollment extends AbstractEntity {
 	@Column(name = "status", nullable = false)
 	private Status status;
 	
-	@ManyToOne(targetEntity = Student.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "student_id")
+	@ManyToOne(targetEntity = Student.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_id", insertable = false, updatable = false)
     Student student;
+	
+	@Column(name = "student_id")
+	private Long studentId;
 
-	@ManyToOne(targetEntity = Course.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "course_id")
+	@ManyToOne(targetEntity = Course.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id", insertable = false, updatable = false)
     Course course;
+	
+	@Column(name = "course_id")
+	private Long courseId;
 
 }

@@ -29,6 +29,7 @@ public class StudentServiceImpl implements StudentService {
 	}
 	
 	@Override
+	@Transactional(readOnly = true)
 	public Student findStudentByEmail(String email) {
 
 		return studentRepository.findStudentByEmail(email).orElseThrow(

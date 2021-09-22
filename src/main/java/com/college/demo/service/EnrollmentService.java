@@ -14,12 +14,18 @@ public interface EnrollmentService {
 	public List<Enrollment> findEnrollmentByStudent(Long studentId);
 	
 	public List<Enrollment> findEnrollmentByCourse(Long courseId);
+	
+	public List<Enrollment> findEnrollmentByStatus(String status);
+	
+	public Enrollment findEnrollmentByStudentandCourse(Long studentId, Long courseId);
 
 	public Enrollment enrollStudent(Enrollment enrollment);
 
 	public void deleteEnrollmentByStudent(Long studentId);
 	
 	public void deleteEnrollmentById(Long enrollmentId);
+	
+	public void deleteEnrollmentByStudentAndCourse(Long studentId, Long courseId);
 
 	public Enrollment updateEnrollment(Long enrollmentId, String status, LocalDate endDate, Float score );
 }

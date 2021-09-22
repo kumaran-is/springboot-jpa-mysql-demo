@@ -65,6 +65,7 @@ public class EnrollmentController {
 		return ResponseEntity.ok().body(enrollments);
 	}
 	
+	
 	@GetMapping("/{courseId}")
 	@ApiOperation("Returns all the enrollments by a course")
 	public ResponseEntity<List<Enrollment>> findEnrollmentByCourse(@Valid @PathVariable("courseId") Long courseId) {
@@ -74,10 +75,30 @@ public class EnrollmentController {
 		return ResponseEntity.ok().body(enrollments);
 	}
 	
+	@GetMapping("/{status}")
+	@ApiOperation("Returns all the enrollments by a status")
+	public ResponseEntity<List<Enrollment>> findEnrollmentByStatus(@Valid @PathVariable("status") String status) {
+		// return 200, with JSON body
+		List<Enrollment> enrollments = enrollmentService.findEnrollmentByStatus(status);
+		// return ResponseEntity.ok().body(enrollmentMapper.toEnrollmentDTO(enrollmentService.findEnrollmentByStatus(status)));
+		return ResponseEntity.ok().body(enrollments);
+	}
+	
+	@GetMapping("/{studentId}/{courseId}")
+	@ApiOperation("Returns an enrollment by a student and a course")
+	public ResponseEntity<Enrollment> findEnrollmentByStudentandCourse(@Valid @PathVariable("studentId") Long studentId, @Valid @PathVariable("courseId") Long courseId) {
+		// return 200, with JSON body
+		Enrollment enrollment = enrollmentService.findEnrollmentByStudentandCourse(studentId, courseId);
+		// return ResponseEntity.ok().body(enrollmentMapper.toEnrollmentDTO(enrollmentService.findEnrollmentByStudentandCourse(studentId, courseId)));
+		return ResponseEntity.ok().body(enrollment);
+	}
+	
 	@PostMapping
 	@ApiOperation("Enroll a student to a course")
 	public ResponseEntity<EnrollmentDTO> enrollAStudent(@Valid @RequestBody EnrollmentDTO enrollmentDTO) throws URISyntaxException {
+		log.debug("Controller>>>>>>>>>>>enrollAStudent>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + enrollmentDTO);
 		
+		log.debug("Controller>>>>>>>>>>>enrollmentMapper.toEnrollment(enrollmentDTO)>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + enrollmentMapper.toEnrollment(enrollmentDTO));
 		Enrollment savedEnrollment = enrollmentService.enrollStudent(enrollmentMapper.toEnrollment(enrollmentDTO));
 		return ResponseEntity.status(HttpStatus.CREATED).body(enrollmentMapper.toEnrollmentDTO(savedEnrollment));
 		// return ResponseEntity.created(new URI("/api/v1/enrollment/" +
@@ -85,7 +106,7 @@ public class EnrollmentController {
 	}
 
 	@DeleteMapping("/{id}")
-	@ApiOperation("Delete a Enrollment by an enrollment Id")
+	@ApiOperation("Delete an Enrollment by an enrollment Id")
 	public ResponseEntity<Void> deleteEnrollmentById(@PathVariable("id") Long id) {
 		if (null == id || id.equals(0L)) {
 			throw new InvalidInputException("702", "Id is not valid");
@@ -96,11 +117,24 @@ public class EnrollmentController {
 	
 	@DeleteMapping("/{studentId}")
 	@ApiOperation("Delete one or more enrollments for a student")
-	public ResponseEntity<Void> deleteEnrollmentByStudent(@PathVariable("id") Long studentId) {
+	public ResponseEntity<Void> deleteEnrollmentByStudent(@PathVariable("studentId") Long studentId) {
 		if (null == studentId || studentId.equals(0L)) {
 			throw new InvalidInputException("702", "Student Id is not valid");
 		}
 		enrollmentService.deleteEnrollmentByStudent(studentId);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@DeleteMapping("/{studentId}/{courseId}")
+	@ApiOperation("Delete an enrollment by student and course")
+	public ResponseEntity<Void> deleteEnrollmentByStudentandCourse(@PathVariable("studentId") Long studentId, @PathVariable("courseId") Long courseId) {
+		if (null == studentId || studentId.equals(0L)) {
+			throw new InvalidInputException("702", "Student Id is not valid");
+		}
+		if (null == courseId || courseId.equals(0L)) {
+			throw new InvalidInputException("702", "Course Id is not valid");
+		}
+		enrollmentService.deleteEnrollmentByStudentAndCourse(studentId, courseId);
 		return ResponseEntity.noContent().build();
 	}
 	
