@@ -38,21 +38,25 @@ public class FacultyController {
 	@Autowired
 	private FacultyMapper facultyMapper;
 
+	@GetMapping
+	@ApiOperation("Returns all the faculties")
+	public ResponseEntity<List<Faculty>> findAllFaculties() {
+		// return 200, with JSON body
+		List<Faculty> faculties = facultyService.getAllFaculties();
+	//	return ResponseEntity.ok().body(facultyMapper.toFacultyDTOs(facultyService.getAllFaculties()));
+		return ResponseEntity.ok().body(faculties);
+	}
+	
 	@GetMapping("/{email}")
 	@ApiOperation("Returns a faculty by email")
-	public ResponseEntity<FacultyDTO> findFacultyByEmail(@Valid @PathVariable("email") String email) {
+	public ResponseEntity<Faculty> findFacultyByEmail(@Valid @PathVariable("email") String email) {
 		if (CommonUtils.isBlankString(email)) {
 			throw new InvalidInputException("703", "Email is null or blank");
 		}
 		// return 200, with JSON body
-		return ResponseEntity.ok().body(facultyMapper.toFacultyDTO(facultyService.findFacultyByEmail(email)));
-	}
-
-	@GetMapping
-	@ApiOperation("Returns all the faculties")
-	public ResponseEntity<List<FacultyDTO>> findAllFaculties() {
-		// return 200, with JSON body
-		return ResponseEntity.ok().body(facultyMapper.toFacultyDTOs(facultyService.getAllFaculties()));
+		Faculty faculty = facultyService.findFacultyByEmail(email);
+		// return ResponseEntity.ok().body(facultyMapper.toFacultyDTO(facultyService.findFacultyByEmail(email)));
+		return ResponseEntity.ok().body(faculty);
 	}
 
 	@PostMapping
@@ -77,15 +81,16 @@ public class FacultyController {
 
 	@PutMapping("/{id}")
 	@ApiOperation("Update a faculty")
-	public ResponseEntity<FacultyDTO> modifyFaculty(@PathVariable("id") Long id,
+	public ResponseEntity<Faculty> modifyFaculty(@PathVariable("id") Long id,
 			@RequestParam(name = "firstName", required = false) String firstName,
 			@RequestParam(name = "lastName", required = false) String lastName,
 			@RequestParam(name = "email", required = false) String email) {
 		if (null == id || id.equals(0L)) {
 			throw new InvalidInputException("702", "Id is not valid");
 		}
-		return ResponseEntity.ok()
-				.body(facultyMapper.toFacultyDTO(facultyService.updateFaculty(id, firstName, lastName, email)));
+		Faculty faculty = facultyService.updateFaculty(id, firstName, lastName, email);
+		// return ResponseEntity.ok().body(facultyMapper.toFacultyDTO(facultyService.updateFaculty(id, firstName, lastName, email)));
+		return ResponseEntity.ok().body(faculty);
 
 	}
 }
