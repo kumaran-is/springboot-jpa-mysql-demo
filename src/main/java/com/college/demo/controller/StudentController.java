@@ -41,12 +41,13 @@ public class StudentController {
 
 	@GetMapping("/{email}")
 	@ApiOperation("Returns a student by email")
-	public ResponseEntity<StudentDTO> findStudentByEmail(@Valid @PathVariable("email") String email) {
+	public ResponseEntity<Student> findStudentByEmail(@Valid @PathVariable("email") String email) {
 		if (CommonUtils.isBlankString(email)) {
 			throw new InvalidInputException("703", "Email is null or blank");
 		}
 		// return 200, with JSON body
-		return ResponseEntity.ok().body(studentMapper.toStudentDTO(studentService.findStudentByEmail(email)));
+		// return ResponseEntity.ok().body(studentMapper.toStudentDTO(studentService.findStudentByEmail(email)));
+		return ResponseEntity.ok().body(studentService.findStudentByEmail(email));
 	}
 
 	@GetMapping

@@ -2,7 +2,6 @@ package com.college.demo.model;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,11 +16,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
-import com.college.demo.model.AbstractEntity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
@@ -43,12 +38,10 @@ public class Course extends AbstractEntity {
 	@Column(name = "duration", nullable = false)
 	private Integer duration;
 	
-	//@JsonIgnoreProperties(value = {"course", "hibernateLazyInitializer"})
 	@ManyToMany(targetEntity = Faculty.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "course_faculty",
 		joinColumns = { @JoinColumn(name = "course_id", referencedColumnName="id")},
 		inverseJoinColumns = { @JoinColumn (name = "faculty_id", referencedColumnName="id")})
-	// private List<Faculty>  faculties;
 	private Set<Faculty> faculties = new HashSet<>();
 	
 	@OneToMany(targetEntity = Enrollment.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "course")

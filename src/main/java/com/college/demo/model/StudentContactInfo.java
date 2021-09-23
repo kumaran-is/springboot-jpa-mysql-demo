@@ -1,10 +1,15 @@
 package com.college.demo.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.ToString;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
@@ -13,9 +18,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper=false)
-//@EqualsAndHashCode(exclude = {"student"})
-// @ToString(exclude = {"student"})
+@EqualsAndHashCode(callSuper=false, exclude = {"student"})
+@ToString(exclude = {"student"})
 public class StudentContactInfo extends AbstractEntity {
 
 	@Column(name = "phone", nullable = false)
@@ -34,7 +38,10 @@ public class StudentContactInfo extends AbstractEntity {
     private String zipcode;
 	
 
-	/*@JsonIgnoreProperties(value = {"studentContactInfo", "hibernateLazyInitializer"})
-	@OneToOne(targetEntity = StudentContactInfo.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "studentContactInfo")
-	private Student student;  */
+	@OneToOne(targetEntity = Student.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "studentContactInfo")
+	private Student student; 
+	
+	@OneToOne(targetEntity = StudentContactInfo.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "student_contact_info_id")
+	private StudentContactInfo studentContactInfo;
 }
