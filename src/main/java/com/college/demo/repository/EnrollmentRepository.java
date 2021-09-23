@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import com.college.demo.model.Enrollment;
@@ -14,8 +15,8 @@ import com.college.demo.constants.Status;
 public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
 
 	@Transactional(readOnly = true)
-	@Query("SELECT e FROM Enrollment e JOIN e.student s WHERE s.id = ?1")
-	List<Enrollment> findEnrollmentByStudent(Long studentId);
+	@Query("SELECT e FROM Enrollment e JOIN e.student s WHERE s.id = :studentId")
+	List<Enrollment> findEnrollmentByStudent(@Param("studentId") Long studentId);
 	
 	@Transactional(readOnly = true)
 	@Query("SELECT e FROM Enrollment e JOIN e.course c WHERE c.id = ?1")
