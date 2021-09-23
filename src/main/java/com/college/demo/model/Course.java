@@ -49,7 +49,7 @@ public class Course extends AbstractEntity {
 		joinColumns = { @JoinColumn(name = "course_id", referencedColumnName="id")},
 		inverseJoinColumns = { @JoinColumn (name = "faculty_id", referencedColumnName="id")})
 	// private List<Faculty>  faculties;
-	private Set<Faculty> faculties = new HashSet<Faculty>();
+	private Set<Faculty> faculties = new HashSet<>();
 	
 	@OneToMany(targetEntity = Enrollment.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "course")
 	private Set<Enrollment>  enrollments = new HashSet<>(); 

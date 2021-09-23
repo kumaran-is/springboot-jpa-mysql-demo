@@ -51,9 +51,10 @@ public class StudentController {
 
 	@GetMapping
 	@ApiOperation("Returns all the Students")
-	public ResponseEntity<List<StudentDTO>> findAllStudents() {
+	public ResponseEntity<List<Student>> findAllStudents() {
 		// return 200, with JSON body
-		return ResponseEntity.ok().body(studentMapper.toStudentDTOs(studentService.getAllStudents()));
+		// return ResponseEntity.ok().body(studentMapper.toStudentDTOs(studentService.getAllStudents()));
+		return ResponseEntity.ok().body(studentService.getAllStudents());
 	}
 
 	@PostMapping

@@ -18,7 +18,9 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.college.demo.constants.Gender;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,6 +35,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper=false, exclude={"studentContactInfo", "enrollments"})
 @ToString(exclude = {"studentContactInfo", "enrollments"})
+@JsonIdentityInfo(
+   generator = ObjectIdGenerators.PropertyGenerator.class,
+   property = "id"
+)
 public class Student extends AbstractEntity {
 
 	@Column(name = "first_name", nullable = false)
@@ -52,7 +58,7 @@ public class Student extends AbstractEntity {
 	private Gender gender;
 	
 
-	@JsonIgnoreProperties(value = {"student", "hibernateLazyInitializer"})
+	// @JsonIgnoreProperties(value = {"student", "hibernateLazyInitializer"})
 	@OneToOne(targetEntity = StudentContactInfo.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "student_contact_info_id")
 	private StudentContactInfo studentContactInfo;
