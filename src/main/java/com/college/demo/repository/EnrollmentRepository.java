@@ -62,6 +62,5 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
 	@Modifying
 	@Query("DELETE FROM Enrollment e WHERE e.studentId = ?1 and e.courseId = ?2")
 	void deleteByStudentandCourse(Long studentId, Long courseId);
-	
 }
 
