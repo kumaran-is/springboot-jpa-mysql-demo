@@ -12,11 +12,7 @@ import com.college.demo.exception.ResourceNotFoundException;
 import com.college.demo.model.Enrollment;
 import com.college.demo.repository.EnrollmentRepository;
 
-import lombok.extern.slf4j.Slf4j;
-
-
 @Service
-@Slf4j
 @Transactional
 public class EnrollmentServiceImpl implements EnrollmentService {
 
@@ -66,11 +62,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 	@Override
 	public Enrollment enrollStudent(Enrollment enrollment) {
 		
-		log.debug("11111111111>>>>>>>>>>>enrollment>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + enrollment);
-		
 		Optional<Enrollment> enrollmentOptional = enrollmentRepository.findEnrollmentByStudentAndCourse(enrollment.getStudentId(), enrollment.getCourseId());
-
-		log.debug("22222222>>>>>>>>>>>enrollmentOptional>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + enrollmentOptional); 
 		if (enrollmentOptional.isPresent()) {
 			throw new ResourceAlreadyExistsException("701",
 					"Enrollment for student id " + enrollment.getStudentId() + " with course id " + enrollment.getCourseId() + " already exists");
