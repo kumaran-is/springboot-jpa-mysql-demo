@@ -36,13 +36,13 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Enrollment> findEnrollmentByStudent(Long studentId) {
-		return enrollmentRepository.findEnrollmentByStudent(studentId);
+		return enrollmentRepository.findByStudentId(studentId);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public List<Enrollment> findEnrollmentByCourse(Long courseId) {
-		return enrollmentRepository.findEnrollmentByCourse(courseId);
+		return enrollmentRepository.getByCourse(courseId);
 	}
 	
 	
@@ -55,14 +55,14 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 	@Override
 	@Transactional(readOnly = true)
 	public Enrollment findEnrollmentByStudentandCourse(Long studentId, Long courseId) {
-		 return enrollmentRepository.findEnrollmentByStudentAndCourse(studentId, courseId).orElseThrow(
+		 return enrollmentRepository.findByStudentIdAndCourseId(studentId, courseId).orElseThrow(
 					() -> new ResourceNotFoundException("700", "Enrollment with student id " + studentId + " and  course id " + courseId + " does not exists"));
 	}
 
 	@Override
 	public Enrollment enrollStudent(Enrollment enrollment) {
 		
-		Optional<Enrollment> enrollmentOptional = enrollmentRepository.findEnrollmentByStudentAndCourse(enrollment.getStudentId(), enrollment.getCourseId());
+		Optional<Enrollment> enrollmentOptional = enrollmentRepository.findByStudentIdAndCourseId(enrollment.getStudentId(), enrollment.getCourseId());
 		if (enrollmentOptional.isPresent()) {
 			throw new ResourceAlreadyExistsException("701",
 					"Enrollment for student id " + enrollment.getStudentId() + " with course id " + enrollment.getCourseId() + " already exists");

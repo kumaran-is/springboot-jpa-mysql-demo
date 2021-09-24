@@ -14,22 +14,49 @@ import com.college.demo.constants.Status;
 @Repository
 public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
 
+	//derived from method name: refer : https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#reference
+	@Transactional(readOnly = true)
+	List<Enrollment> findByStudentId(Long studentId);
+	
+	// or use JPQL Query as below
+	
 	@Transactional(readOnly = true)
 	@Query("SELECT e FROM Enrollment e JOIN e.student s WHERE s.id = :studentId")
-	List<Enrollment> findEnrollmentByStudent(@Param("studentId") Long studentId);
+	List<Enrollment> getByStudent(@Param("studentId") Long studentId);
+	
+	
+	//derived from method name
+	@Transactional(readOnly = true)
+	List<Enrollment> findByCourseId(Long courseId);
+	
+	// or use JPQL Query as below
 	
 	@Transactional(readOnly = true)
 	@Query("SELECT e FROM Enrollment e JOIN e.course c WHERE c.id = ?1")
-	List<Enrollment> findEnrollmentByCourse(Long courseId);
+	List<Enrollment> getByCourse(Long courseId);
+	
+	
+	//derived from method name
+	@Transactional(readOnly = true)
+	List<Enrollment> findByStatus(Status status);
+	
+	// or use JPQL Query as below
 	
 	@Transactional(readOnly = true)
 	@Query("SELECT e FROM Enrollment e WHERE e.status = ?1")
-	List<Enrollment> findByStatus(Status status);
+	List<Enrollment> getByStatus(Status status);
+	
+	
+	//derived from method name
+	@Transactional(readOnly = true)
+	Optional<Enrollment>  findByStudentIdAndCourseId(Long studentId, Long courseId);
+	
+	// or use JPQL Query as below
 	
 	@Transactional(readOnly = true)
 	//@Query("SELECT e FROM Enrollment e JOIN e.student s JOIN e.course c WHERE s.id = ?1 and c.id = ?2")
 	@Query("SELECT e FROM Enrollment e WHERE e.studentId = ?1 and e.courseId = ?2")
-	Optional<Enrollment>  findEnrollmentByStudentAndCourse(Long studentId, Long courseId);
+	Optional<Enrollment>  getByStudentAndCourse(Long studentId, Long courseId);
 	
 	@Transactional(readOnly = true)
 	 @Query("SELECT case when count(e)> 0 then true else false end from Enrollment e WHERE e.studentId = ?1")
