@@ -1,11 +1,10 @@
 package com.college.demo.audit;
 
-import static javax.persistence.TemporalType.TIMESTAMP;
-import java.util.Date;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Temporal;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -16,25 +15,25 @@ import lombok.Data;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @Data
-public class Auditable<U> {
+public class Auditable<U> implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	// updatable flag helps to avoid the override of column's value during the update operation
 	@Column(name = "created_by",updatable = false, nullable = false)
 	@CreatedBy
 	protected U createdBy;
 
 	// updatable flag helps to avoid the override of column's value during the update operation
-	@Column(name = "created_date", updatable = false, nullable = false)
+	@Column(name = "created_date", columnDefinition = "TIMESTAMP", updatable = false, nullable = false)
 	@CreatedDate
-	@Temporal(TIMESTAMP)
-	protected Date createdDate;
+	protected LocalDateTime createdDate;
 
 	@Column(name = "last_modified_by", nullable = false)
 	@LastModifiedBy
 	protected U lastModifiedBy;
 
-	@Column(name = "last_modified_date", nullable = false)
+	@Column(name = "last_modified_date", columnDefinition = "TIMESTAMP", nullable = false)
 	@LastModifiedDate
-	@Temporal(TIMESTAMP)
-	protected Date lastModifiedDate;
+	protected LocalDateTime lastModifiedDate;
 }

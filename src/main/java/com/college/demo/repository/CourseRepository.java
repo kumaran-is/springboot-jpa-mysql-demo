@@ -1,17 +1,17 @@
 package com.college.demo.repository;
 
 import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
-// import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import com.college.demo.model.Student;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.college.demo.model.Course;
+
 @Repository
-public interface StudentRepository extends JpaRepository<Student, Long> {
+public interface CourseRepository extends JpaRepository<Course, Long> {
 
 	@Transactional(readOnly = true)
-	// @Query("SELECT s FROM Student s where s.email = ?1")
-	Optional<Student> findStudentByEmail(String email);
-
+	// @Query("SELECT c FROM Course c where c.courseName = ?1")
+	Optional<Course> findCourseByCourseName(String coursename);
 }

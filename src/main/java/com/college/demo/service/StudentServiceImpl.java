@@ -3,7 +3,7 @@ package com.college.demo.service;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.college.demo.exception.ResourceAlreadyExistsException;
@@ -11,6 +11,9 @@ import com.college.demo.exception.ResourceNotFoundException;
 import com.college.demo.model.Student;
 import com.college.demo.repository.StudentRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 @Transactional
 public class StudentServiceImpl implements StudentService {
@@ -19,6 +22,14 @@ public class StudentServiceImpl implements StudentService {
 	private StudentRepository studentRepository;
 
 	@Override
+	@Transactional(readOnly = true)
+	public List<Student> getAllStudents() {
+
+		return studentRepository.findAll();
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
 	public Student findStudentByEmail(String email) {
 
 		return studentRepository.findStudentByEmail(email).orElseThrow(
@@ -27,13 +38,8 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public List<Student> getAllStudents() {
-
-		return studentRepository.findAll();
-	}
-
-	@Override
 	public Student addNewStudent(Student student) {
+		log.debug("addNewStudent service student ....." + student);
 
 		Optional<Student> studentOptional = studentRepository.findStudentByEmail(student.getEmail());
 
@@ -43,7 +49,7 @@ public class StudentServiceImpl implements StudentService {
 		}
 
 		return studentRepository.save(student);
-
+		
 	}
 
 	@Override

@@ -2,51 +2,63 @@ package com.college.demo.model;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import com.college.demo.audit.Auditable;
-
+import com.college.demo.constants.Gender;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "student")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
-public class Student extends Auditable<String> {
+@EqualsAndHashCode(callSuper=false, exclude={"studentContactInfo", "enrollments"})
+@ToString(exclude = {"studentContactInfo", "enrollments"})
+@JsonIdentityInfo(
+   generator = ObjectIdGenerators.PropertyGenerator.class,
+   property = "id"
+)
+public class Student extends AbstractEntity {
 
-	@Id
-	@Column(nullable = false, updatable = false)
-	@SequenceGenerator(name = "student_sequence", sequenceName = "student_sequence", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_sequence")
-
-	private Long id;
-
-	@Column(nullable = false)
+	@Column(name = "first_name", nullable = false)
 	private String firstName;
 
-	@Column(nullable = false)
+	@Column(name = "last_name", nullable = false)
 	private String lastName;
 
-	@Column(nullable = false, unique = true)
+	@Column(name = "email", nullable = false, unique = true)
 	private String email;
-
 	
-	@Column(nullable = false)
+	@Column(name = "dob", columnDefinition = "DATE", nullable = false)
 	private LocalDate dob;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "gender", nullable = false)
+	private Gender gender;
+	
+	@OneToOne(targetEntity = StudentContactInfo.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "student_contact_info_id")
+	private StudentContactInfo studentContactInfo;
+	
+	@OneToMany(targetEntity = Enrollment.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "student")
+	private Set<Enrollment>  enrollments = new HashSet<>();
 
 	@Transient
 	private Integer age;
@@ -58,5 +70,5 @@ public class Student extends Auditable<String> {
 	public void setAge(Integer age) {
 		this.age = age;
 	}
-
+	
 }

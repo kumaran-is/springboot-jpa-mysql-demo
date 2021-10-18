@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.college.demo.aop.LoggingAspect;
 import com.college.demo.dto.StudentDTO;
 import com.college.demo.exception.InvalidInputException;
 import com.college.demo.mapper.StudentMapper;
@@ -25,6 +29,7 @@ import com.college.demo.model.Student;
 import com.college.demo.service.StudentService;
 import com.college.demo.util.CommonUtils;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/students")
 public class StudentController {
@@ -36,24 +41,27 @@ public class StudentController {
 
 	@GetMapping("/{email}")
 	@ApiOperation("Returns a student by email")
-	public ResponseEntity<StudentDTO> findStudentByEmail(@Valid @PathVariable("email") String email) {
+	public ResponseEntity<Student> findStudentByEmail(@Valid @PathVariable("email") String email) {
 		if (CommonUtils.isBlankString(email)) {
 			throw new InvalidInputException("703", "Email is null or blank");
 		}
 		// return 200, with JSON body
-		return ResponseEntity.ok().body(studentMapper.toStudentDTO(studentService.findStudentByEmail(email)));
+		// return ResponseEntity.ok().body(studentMapper.toStudentDTO(studentService.findStudentByEmail(email)));
+		return ResponseEntity.ok().body(studentService.findStudentByEmail(email));
 	}
 
 	@GetMapping
 	@ApiOperation("Returns all the Students")
-	public ResponseEntity<List<StudentDTO>> findAllStudents() {
+	public ResponseEntity<List<Student>> findAllStudents() {
 		// return 200, with JSON body
-		return ResponseEntity.ok().body(studentMapper.toStudentDTOs(studentService.getAllStudents()));
+		// return ResponseEntity.ok().body(studentMapper.toStudentDTOs(studentService.getAllStudents()));
+		return ResponseEntity.ok().body(studentService.getAllStudents());
 	}
 
 	@PostMapping
 	@ApiOperation("Add a new student")
 	public ResponseEntity<StudentDTO> addNewStudent(@Valid @RequestBody StudentDTO studentDTO) throws URISyntaxException {
+
 		Student savedStudent = studentService.addNewStudent(studentMapper.toStudent(studentDTO));
 		return ResponseEntity.status(HttpStatus.CREATED).body(studentMapper.toStudentDTO(savedStudent));
 		// return ResponseEntity.created(new URI("/api/v1/student/" +
